@@ -1,2 +1,2 @@
 # editor
-橙光编辑器HTML版
+H5 GAME 编辑器
