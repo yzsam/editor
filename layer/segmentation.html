@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>剧情选择</title>
+<script src="../script/jquery/2.1.4/jquery.min.js"></script>
+<style>
+	html, body {
+		margin: 0;
+		padding: 0;
+		font-size: 10px;
+		width: 100%;
+		height: 100%;
+		background: #f0f0f0;
+		text-align: center;
+	}
+	.container {
+		padding: 15px;
+		text-align: left;
+	}
+	.f-l {float:left}
+	.f-r {float:right}
+	.hidden {overflow: hidden}
+	.list {
+		width: 315px;
+		height: 225px;
+		border: solid 1px #dedee0;
+		background: white;
+		overflow-x: auto;
+	}
+	.f-r div{
+		margin-top: 25px;
+	}
+	.pic{
+		width: 200px;
+		height: 115px;
+		background: #000;
+	}
+	.footer {
+		margin-top: 15px;
+		text-align: right;
+	}
+	.btn-group button{
+		width: 75px;
+		height: 30px;
+		margin-left: 10px;
+		font-size: 12px;
+		border: solid 1px #dedee0;
+		border-radius: 5px;
+		background: white;
+		box-sizing: border-box;
+	}
+	.btn-group button.confirm{
+		color: white;
+		border: solid 1px #ffac28;
+		background: #ffac28;
+	}
+li{
+	padding-left: 35px;
+	font-size: 14px;
+	text-align: left;
+	box-sizing: border-box;
+}
+li.active{
+	border: solid 1px #000000;
+	background: #aaaaaa;
+}
+li.plotName{
+	padding-left: 45px;
+	cursor: pointer;
+}
+li.plotName:before{
+	content: '◆';
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	vertical-align: sub;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+	<div class="content hidden">
+		<div class="f-l">
+			<div class="list"></div>
+		</div>
+		<div class="f-r">
+			<div>
+				<label>剧情ID ：</label><span id="plotId"></span>
+			</div>
+			<div>
+				<label>剧情名称 ：</label><span id="plotName"></span>
+			</div>
+			<div class="pic">
+
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<span class="btn-group">
+			<button class="confirm">确定</button>
+			<button class="layer-close">取消</button>
+		</span>
+	</div>
+</div>
+<script>
+	$(".list").append('<li class="totalTitle">' + parent.PData.data.Main.projectName + ':</li>');
+	var chapter = parent.PData.data.Main.DStory;
+	for (var i = 0; i < chapter.length; ++i) {
+		var li = $('<li class="plotName" data-id="' + i + '">' + chapter[i].Name + '</li>');
+		li.click(function () {
+			$('.plotName').removeClass('active');
+			$(this).addClass('active');
+			var id = $(this).data("id");
+			$("#plotId").html(chapter[id].ID);
+			$("#plotName").html(chapter[id].Name);
+			console.log('切换到 ' + chapter[id].ID +":"+chapter[id].Name );
+		});
+		$(".list").append(li);
+	}
+
+	//关闭弹窗
+	$('.layer-close').eq(0).click(function () {
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		console.log('关闭:'+index);
+		parent.layer.close(index);
+		layer.close()
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>强制存档/读档</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+        .f-r{float: right}
+        .input {
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .input-160 {
+            width: 160px;
+        }
+        .saveread {
+            padding: 20px;
+            overflow: hidden;
+        }
+        .saveread>div{
+            overflow: hidden;
+        }
+        .saveNum {
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 15px;
+        }
+        label {vertical-align: middle;}
+        .btn-group button {
+            width: 75px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .btn-group button.confirm {
+            margin-right: 5px;
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="saveread">
+        <div>
+            <label>存档/读档</label>
+            <select class="input input-160 f-r" name="">
+                <option value="">存档</option>
+                <option value="">读档</option>
+            </select>
+        </div>
+        <div class="saveNum">
+            <label>存档号</label>
+            <select class="input input-160 f-r" name="">
+                <option value="">1</option>
+            </select>
+        </div>
+        <div class="footer">
+            <label for="readDel"><input type="checkbox" id="readDel">读后删除</label>
+            <span class="btn-group f-r">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+        </div>
+    </div>
+    <script>
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:'+index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    </script>
+</body>
+</html>

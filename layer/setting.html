@@ -1,0 +1,1830 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>批量导入文本-闪版</title>
+	<script src="../script/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+			font-size: 12px;
+		}
+
+		ul, ol, li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		ul {
+			overflow: hidden;
+		}
+
+		.f-l {
+			float: left
+		}
+
+		.f-r {
+			float: right
+		}
+
+		.ds-bl {
+			display: block
+		}
+
+		.hidden {
+			overflow: hidden
+		}
+
+		.ta-r {
+			text-align: right
+		}
+
+		.ps-r {
+			position: relative;
+		}
+
+		.clearfix {
+			clear: both;
+			overflow: hidden;
+			width: 0;
+			height: 0;
+			content: ''
+		}
+
+		.input {
+			display: inline-block;
+			height: 25px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			box-sizing: border-box;
+		}
+
+		.title-border {
+			color: #434343;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+
+		.input-60 {
+			width: 60px;
+			text-align: right;
+		}
+
+		.input-70 {
+			width: 70px;
+			text-align: right;
+		}
+
+		.input-75 {
+			width: 75px;
+			text-align: right;
+		}
+
+		.input-80 {
+			width: 80px;
+			text-align: right;
+		}
+
+		.input-85 {
+			width: 85px;
+			text-align: right;
+		}
+
+		.input-95 {
+			width: 95px;
+		}
+
+		.input-100 {
+			width: 100px;
+		}
+
+		.input-110 {
+			width: 110px;
+		}
+
+		.input-125 {
+			width: 125px;
+		}
+
+		.input-130 {
+			width: 130px;
+			height: 20px;
+		}
+
+		.input-140 {
+			width: 140px;
+		}
+
+		.input-150 {
+			width: 150px;
+		}
+
+		.input-160 {
+			width: 160px;
+		}
+
+		.input-165 {
+			width: 165px;
+		}
+
+		.input-185 {
+			width: 185px;
+		}
+
+		.input-190 {
+			width: 190px;
+		}
+
+		.input-260 {
+			width: 260px;
+		}
+
+		span.title {
+			position: absolute;
+			top: -10px;
+			left: 6px;
+		}
+
+		.container {
+			padding: 0;
+			overflow: hidden;
+		}
+
+		ul.tab-box li {
+			float: left;
+			width: 54px;
+			text-align: center;
+			padding: 5px 10px;
+			border-bottom: solid 2px transparent;
+		}
+
+		ul.tab-box li.active {
+			color: #ffac28;
+			border-bottom: solid 2px #ffac28;
+		}
+
+		.tab-item {
+			display: none;
+			width: 100%;
+			height: 490px;
+			padding: 15px;
+			background: #f0f0f0;
+			border-top: solid 1px #dedee0;
+			box-sizing: border-box;
+		}
+
+		/*标题画面 start*/
+		.item-title .title-attr {
+			padding: 20px 10px 5px;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+		}
+
+		.item-title .title-btn {
+			margin-top: 15px;
+			padding: 10px 5px 5px;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+		}
+
+		.item-title .title-attr, .item-title .title-btn {
+			width: 215px;
+			box-sizing: border-box;
+		}
+
+		.item-title .title-attr button {
+			width: 95px;
+			height: 25px;
+			margin-bottom: 5px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			background: white;
+			box-sizing: border-box;
+		}
+
+		.item-title .title-btn li, .item-title .title-attr div {
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+
+		.item-title .btn-reset, .item-title .btn-preview {
+			width: 50px;
+			height: 25px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			background: white;
+		}
+
+		.item-title .btn-preview {
+			color: #ffac28;
+			border: solid 1px #ffac28;
+		}
+
+		.item-title .title-interface {
+			width: 540px;
+			height: 330px;
+			padding: 10px 0;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		.item-title .title-interface .preview {
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-title .btn-location {
+			width: 540px;
+			margin-top: 10px;
+			padding: 20px 15px 15px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		.item-title .selectbtn-location {
+			padding: 15px 10px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		.item-title .startend-location {
+			padding: 10px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		/*标题画面 end*/
+
+		/*工程菜单 start*/
+		.item-menu .menu-btn li {
+			overflow: hidden;
+		}
+
+		.item-menu .title-interface {
+			width: 540px;
+			height: 370px;
+			padding: 10px 0;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		.item-menu .title-interface .preview {
+			width: 100%;
+			height: 300px;
+			padding: 0;
+			margin: 0;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-menu .title-interface button {
+			position: absolute;
+			right: 25px;
+			bottom: 15px;
+			width: 80px;
+			height: 25px;
+			color: #ffac28;
+			border: solid 1px #ffac28;
+			border-radius: 3px;
+			box-sizing: border-box;
+			background: white;
+		}
+
+		.item-menu .image {
+			padding: 15px 10px;
+		}
+
+		.item-menu .menu-btn {
+			margin-top: 15px;
+			padding: 10px 15px 15px;
+		}
+
+		.item-menu .sltBtn-location {
+			margin-top: 15px;
+			padding: 15px;
+		}
+
+		.item-menu .sltBtn-location div {
+			overflow: hidden;
+		}
+
+		.item-menu .footer {
+			margin-top: 15px;
+		}
+
+		.item-menu .btnLocate {
+			width: 420px;
+			padding: 15px 10px 25px;
+		}
+
+		.item-menu .btnLocate label input {
+			margin: 0 5px 0 10px;
+		}
+
+		.item-menu .other button {
+			width: 80px;
+			height: 25px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			box-sizing: border-box;
+			background: white;
+		}
+
+		.item-menu .other {
+			margin-left: 15px;
+		}
+
+		/*工程菜单 end*/
+
+		/*对话框 start*/
+		.item-dialog .style-select li {
+			float: left;
+		}
+
+		.item-dialog .dialog-style {
+			width: 320px;
+			height: 100px;
+			padding: 15px 10px;
+			box-sizing: border-box;
+		}
+
+		.item-dialog .dialog-style div.mb-15 {
+			margin-bottom: 15px;
+		}
+
+		.item-dialog .headImg-style {
+			width: 310px;
+			height: 100px;
+			margin: 0 5px;
+			padding: 10px 15px;
+		}
+
+		.item-dialog .detail-setting {
+			width: 120px;
+			height: 100px;
+			padding: 15px;
+		}
+
+		.item-dialog .detail-setting button {
+			width: 80px;
+			height: 25px;
+			background: white;
+			font-size: 12px;
+		}
+
+		.item-dialog .dialog-preview {
+			width: 760px;
+			height: 320px;
+			margin-top: 10px;
+			padding: 10px 0;
+		}
+
+		.item-dialog .dialog-preview div {
+			width: 530px;
+			height: 300px;
+			margin: 0 auto;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-dialog .footer {
+			margin-top: 10px;
+			text-align: right;
+		}
+
+		.item-dialog .footer button {
+			width: 90px;
+			height: 25px;
+			font-size: 12px;
+			background: white;
+		}
+
+		.item-dialog .footer button.preview {
+			color: #ffac28;
+			border: solid 1px #ffac28;
+		}
+
+		.item-dialog .style-select span {
+			display: block;
+			width: 65px;
+			height: 45px;
+			margin: 3px auto;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+		}
+
+		.item-dialog .style-select li:nth-child(2) {
+			margin: 0 30px;
+		}
+
+		/*对话框 end*/
+
+		/*图片选项 start*/
+		.item-picoption .list {
+			width: 225px;
+			height: 420px;
+			overflow-y: auto;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+		}
+
+		.item-picoption .list li {
+			height: 24px;
+			line-height: 24px;
+			padding-left: 20px;
+		}
+
+		.item-picoption button {
+			width: 225px;
+			height: 25px;
+			margin-top: 10px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			background: white;
+			font-size: 12px;
+		}
+
+		.item-picoption .name {
+			width: 525px;
+			padding: 15px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+		}
+
+		.item-picoption .name input {
+			width: 375px;
+			height: 25px;
+			box-sizing: border-box;
+		}
+
+		.item-picoption .pic {
+			width: 525px;
+			margin-top: 15px;
+			padding: 15px 10px 10px 10px;
+		}
+
+		.item-picoption .pic .pic-preview {
+			width: 225px;
+			height: 115px;
+			margin-top: 10px;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-picoption .btn-test {
+			width: 275px;
+			height: 135px;
+			margin: 30px auto 0;
+			padding: 10px 0;
+		}
+
+		.item-picoption .btn-test .pic-preview {
+			width: 260px;
+			height: 115px;
+			margin: 0 auto;
+			box-sizing: border-box;
+			background-image: url("../img/e.jpg");
+		}
+
+		/*图片选项 end*/
+
+		/*剧情回放 start*/
+		.item-replay .bg-pic {
+			width: 160px;
+			height: 60px;
+			padding: 10px 10px 5px;
+		}
+
+		.item-replay .limit-area {
+			width: 160px;
+			height: 130px;
+			margin-top: 25px;
+			padding: 10px 5px;
+		}
+
+		.item-replay .limit-area li {
+			margin-bottom: 3px;
+			overflow: hidden;
+		}
+
+		.item-replay .limit-area li:last-child {
+			margin-bottom: 0;
+		}
+
+		.item-replay .closebtn-location {
+			width: 160px;
+			height: 125px;
+			margin-top: 15px;
+			padding: 20px 15px 5px;
+		}
+
+		.item-replay .closebtn-location > div {
+			margin-bottom: 3px;
+		}
+
+		.item-replay .closebtn-location > div:last-child {
+			margin-bottom: 0;
+		}
+
+		.item-replay .plot-replay {
+			width: 585px;
+			height: 355px;
+			padding-top: 15px;
+		}
+
+		.item-replay .plot-replay .preview {
+			width: 570px;
+			height: 320px;
+			margin: 0 auto;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-replay button {
+			width: 80px;
+			height: 25px;
+			margin-top: 15px;
+			color: #ffac28;
+			font-size: 12px;
+			border: solid 1px #ffac28;
+			border-radius: 3px;
+			background: white;
+		}
+
+		/*剧情回放 end*/
+
+		/*鉴赏界面 start*/
+		.item-appreciate ul {
+			width: 200px;
+			margin: 0 auto;
+			border: solid 1px #dedee0;
+			border-radius: 10px;
+			overflow: hidden;
+		}
+
+		.item-appreciate ul li {
+			float: left;
+			width: 100px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			box-sizing: border-box;
+			background: white;
+		}
+
+		.item-appreciate ul li.active {
+			background: #ffac28;
+		}
+
+		.item-appreciate .content {
+			margin-top: 10px;
+			border-top: solid 1px #dedee0;
+		}
+
+		.item-appreciate .item {
+			display: none;
+			padding: 15px 5px 10px;
+		}
+
+		.item-appreciate .list {
+			width: 180px;
+			height: 370px;
+			border: solid 1px #dedee0;
+			border-radius: 0;
+			box-sizing: border-box;
+		}
+
+		.item-appreciate .list li {
+			width: 180px;
+			height: 24px;
+			line-height: 24px;
+			text-align: left;
+			padding-left: 20px;
+			background: transparent;
+		}
+
+		.item-appreciate .change-largest {
+			width: 180px;
+			height: 30px;
+			margin-top: 10px;
+			font-size: 12px;
+			background: white;
+		}
+
+		.item-appreciate .setting label {
+			display: inline-block;
+			height: 25px;
+			margin-right: 15px;
+			text-align: right;
+		}
+
+		.item-appreciate .setting label.label50 {
+			width: 50px;
+		}
+
+		.item-appreciate .setting label.label38 {
+			width: 38px;
+		}
+
+		.item-appreciate .setting label.coverlabel {
+			margin-right: 10px;
+		}
+
+		.item-appreciate .setting textarea {
+			width: 260px;
+			height: 130px;
+			border: solid 1px #dedee0;
+			vertical-align: text-top;
+			box-sizing: border-box;
+			resize: none;
+		}
+
+		.item-appreciate .setting .preview {
+			width: 245px;
+			height: 130px;
+			margin-left: 6px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-appreciate .interface {
+			float: right;
+			width: 560px;
+			height: 235px;
+			margin-top: 15px;
+			padding: 10px 15px 0 10px;
+		}
+
+		.item-appreciate .interface .preview {
+			width: 390px;
+			height: 220px;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-appreciate .interface .btn {
+			position: absolute;
+			right: 25px;
+			bottom: 0;
+		}
+
+		.item-appreciate .interface button {
+			width: 100px;
+			height: 25px;
+			margin-bottom: 15px;
+			font-size: 12px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			background: white;
+		}
+
+		.item-appreciate .interface button.colored {
+			color: #ffac28;
+			border: solid 1px #ffac28;
+		}
+
+		/*鉴赏界面 end*/
+
+		/*存档/读档 start*/
+		.item-saveLoad .total {
+			width: 185px;
+			height: 150px;
+			padding: 15px 13px 10px 10px;
+		}
+
+		.item-saveLoad .total .save-count {
+			margin: 10px 0 5px;
+		}
+
+		.item-saveLoad .btn-option, .item-saveLoad .save-limit {
+			margin-top: 15px;
+			padding: 10px 10px 5px;
+		}
+
+		.item-saveLoad .btn-option div, .item-saveLoad .save-limit div {
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+
+		.item-saveLoad .btn-option input, .item-saveLoad .save-limit input {
+			float: right;
+		}
+
+		.item-saveLoad .savefile {
+			padding: 5px;
+		}
+
+		.item-saveLoad .savefile .preview {
+			width: 555px;
+			height: 315px;
+			margin-bottom: 15px;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-saveLoad .btns {
+			margin-left: 10px
+		}
+
+		.item-saveLoad .btns button {
+			width: 75px;
+			height: 25px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			font-size: 12px;
+			background: white;
+		}
+
+		.item-saveLoad .btns button.btn-preview {
+			color: #ffac28;
+			border: solid 1px #ffac28;
+		}
+
+		.item-saveLoad .save-setting {
+			margin-top: 15px;
+			padding: 15px 10px 5px;
+		}
+
+		.item-saveLoad .save-setting li {
+			float: left;
+		}
+
+		.item-saveLoad .save-setting li label {
+			display: block;
+			height: 25px;
+		}
+
+		.item-saveLoad .save-setting li label:first-child {
+			margin-bottom: 5px;
+		}
+
+		.item-saveLoad .save-setting li input {
+			margin: 0 10px;
+		}
+
+		.item-saveLoad .save-setting li:last-child input {
+			margin: 0;
+		}
+
+		/*存档/读档 end*/
+
+		/*系统设置 start*/
+		.item-system .system-menu {
+			width: 565px;
+			height: 370px;
+			padding: 15px 3px 5px 3px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			border-radius: 5px;
+		}
+
+		.item-system .system-menu .preview {
+			width: 100%;
+			height: 315px;
+			padding: 0;
+			margin: 0;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-system .system-menu .btns {
+			position: absolute;
+			right: 5px;
+			bottom: 5px;
+			text-align: right;
+		}
+
+		.item-system .system-menu .btns button {
+			width: 80px;
+			height: 25px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			box-sizing: border-box;
+			background: white;
+		}
+
+		.item-system .system-menu .btns button.colored {
+			color: #ffac28;
+			border: solid 1px #ffac28;
+		}
+
+		.item-system .bg-pic {
+			padding: 15px 10px;
+		}
+
+		.item-system .btn {
+			width: 195px;
+			margin-top: 15px;
+			padding: 15px 5px 10px;
+			box-sizing: border-box;
+		}
+
+		.item-system .btn li {
+			overflow: hidden;
+		}
+
+		.item-system .scroller {
+			margin-top: 15px;
+			padding: 15px 5px 15px 10px;
+		}
+
+		.item-system .scroller div {
+			overflow: hidden;
+		}
+
+		.item-system .footer {
+			margin-top: 15px;
+		}
+
+		.item-system .sltCtnLocate {
+			width: 565px;
+			padding: 15px 10px 5px 20px;
+		}
+
+		.item-system .footer .sltCtnLocate div {
+			margin-bottom: 5px;
+		}
+
+		.item-system .sltCtnLocate div input {
+			margin-left: 20px
+		}
+
+		/*系统设置 end*/
+
+		/*总设 start*/
+		.item-total .total-set {
+			padding: 15px 10px 15px 10px;
+		}
+
+		.item-total .total-set p {
+			width: 185px;
+			margin: 0;
+			padding-left: 65px;
+			color: #666;
+		}
+
+		.item-total .total-set > div, .item-total .font-setting > div {
+			margin-bottom: 10px;
+		}
+
+		.item-total .font-setting {
+			margin: 0 5px;
+			padding: 15px 10px;
+		}
+
+		.item-total .font-setting .font-preview {
+			width: 205px;
+			height: 55px;
+			margin-bottom: 15px;
+			line-height: 55px;
+			text-align: center;
+			color: #bca279;
+			font-size: 20px;
+			background: #2a4e89;
+			letter-spacing: 5px;
+		}
+
+		.item-total .font-setting .default-color span {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			background: white;
+			vertical-align: middle;
+		}
+
+		.item-total .font-setting .default-color:first-child {
+			margin-right: 10px;
+		}
+
+		.item-total .system-voice {
+			width: 250px;
+			padding: 20px 5px 15px;
+			box-sizing: border-box;
+		}
+
+		.item-total .output-skin {
+			width: 250px;
+			margin-top: 15px;
+			padding: 20px 5px 15px;
+			box-sizing: border-box;
+		}
+
+		.item-total .gif-make {
+			width: 250px;
+			margin-top: 15px;
+			padding: 20px 5px 15px;
+			box-sizing: border-box;
+		}
+
+		.item-total .others button {
+			background: white;
+			font-size: 12px;
+		}
+
+		/*总设 end*/
+
+		/*商城 start*/
+		.item-mall .mall-setting {
+			width: 215px;
+			padding: 15px 15px 10px 20px;
+			box-sizing: border-box;
+		}
+
+		.item-mall .mall-setting > div {
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+
+		.item-mall .buy-ties {
+			width: 215px;
+			padding: 15px 15px 10px 20px;
+			box-sizing: border-box;
+		}
+
+		.item-mall .buy-ties > div {
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+
+		.item-mall .goods-setting {
+			width: 215px;
+			padding: 15px 15px 5px 20px;
+			box-sizing: border-box;
+		}
+
+		.item-mall .goods-setting > div {
+			margin-bottom: 5px;
+			overflow: hidden;
+		}
+
+		.item-mall .goods-setting button {
+			background: white;
+		}
+
+		.item-mall .goods-preview, .item-mall .goods-survey {
+			padding: 5px;
+		}
+
+		.item-mall .goods-preview > div {
+			width: 530px;
+			height: 300px;
+			background-image: url("../img/e.jpg");
+		}
+
+		.item-mall .goods-survey {
+			margin-top: 15px;
+		}
+
+		.item-mall .goods-survey > div {
+			width: 530px;
+			height: 125px;
+			border: solid 1px #999;
+		}
+
+		/*商城 end*/
+		.btn-group {
+			margin-top: 10px;
+			text-align: right;
+		}
+
+		.btn-group button {
+			width: 110px;
+			height: 30px;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+			background: white;
+			box-sizing: border-box;
+		}
+
+		.btn-group button.confirm {
+			color: white;
+			border: solid 1px #ffac28;
+			background: #ffac28;
+		}
+	</style>
+</head>
+
+<body>
+<div class="container">
+	<ul class="tab-box">
+		<li class="active">标题画面</li>
+		<li>工程菜单</li>
+		<li>对话框</li>
+		<li>图片选项</li>
+		<li>剧情回放</li>
+		<li>鉴赏界面</li>
+		<li>存档/读档</li>
+		<li>系统设置</li>
+		<li>商城</li>
+		<li>总设</li>
+	</ul>
+	<div class="item-title tab-item">
+		<div class="f-l">
+			<div class="title-attr ps-r">
+				<span class="title">标题属性</span>
+				<button>快来做封面</button>
+				<div>
+					<label>标题图片</label>
+					<input class="input input-140 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>标题音乐</label>
+					<input class="input input-140 f-r" type="text" readonly>
+				</div>
+			</div>
+			<div class="title-btn ps-r">
+				<span class="title">标题按钮</span>
+				<ul>
+					<li>
+						<label for="start"><input type="checkbox" id="start">开始</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="load"><input type="checkbox" id="load">读取进度</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="CG"><input type="checkbox" id="CG">CG鉴赏</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="BGM"><input type="checkbox" id="BGM">BGM鉴赏</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="option"><input type="checkbox" id="option">设置</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="leave"><input type="checkbox" id="leave">离开</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="f-r">
+			<div class="title-interface ps-r">
+				<span class="title">标题界面</span>
+				<div class="preview"></div>
+			</div>
+			<div class="btn-location ps-r">
+				<span class="title">按钮位置与坐标</span>
+				<div class="startend-location f-l">
+					<div>
+						<label>起始X坐标 <input class="input input-60" type="number" value="22"></label>
+						<label>起始Y坐标 <input class="input input-60" type="number" value="443"></label>
+					</div>
+					<div>
+						<label>按钮间距 <input class="input input-60" type="number" value="176"></label>
+						<label for="horizontal"><input type="checkbox" id="horizontal">使用横向排布</label>
+					</div>
+				</div>
+				<div class="f-r">
+					<div class="selectbtn-location ps-r">
+						<span class="title">选择按钮坐标</span>
+						<label>X坐标 <input class="input input-60" type="number" value="22"></label>
+						<label>Y坐标 <input class="input input-60" type="number" value="443"></label>
+					</div>
+					<div>
+						<label for="free"><input type="checkbox" id="free">使用自由坐标</label>
+						<button class="btn-reset">复位</button>
+						<button class="btn-preview">预览</button>
+					</div>
+				</div>
+				<div style="clear: both;overflow: hidden"></div>
+			</div>
+		</div>
+	</div>
+	<div class="item-menu tab-item">
+		<div class="f-l">
+			<div class="image ps-r title-border">
+				<span class="title">图像</span>
+				<label>工程菜单背景图片</label>
+				<div>
+					<input class="input input-190" type="text" readonly>
+				</div>
+			</div>
+			<div class="menu-btn ps-r title-border">
+				<span class="title">工程菜单按钮</span>
+				<ul>
+					<li>
+						<label for="save"><input type="checkbox" id="save">存档</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="loadfile"><input type="checkbox" id="loadfile">读档</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="replay"><input type="checkbox" id="replay">回放</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="auto"><input type="checkbox" id="auto">自动</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="option2"><input type="checkbox" id="option2">设置</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="return"><input type="checkbox" id="return">返回</label>
+						<input class="input input-125 f-r" type="text" readonly>
+					</li>
+				</ul>
+			</div>
+			<div class="sltBtn-location ps-r title-border">
+				<span class="title">选择按钮坐标</span>
+				<div>
+					<label>X坐标</label>
+					<input class="input input-125 ta-r f-r" type="number">
+				</div>
+				<div>
+					<label>Y坐标</label>
+					<input class="input input-125 ta-r f-r" type="number">
+				</div>
+			</div>
+		</div>
+		<div class="f-r">
+			<div class="title-interface ps-r">
+				<span class="title">标题界面</span>
+				<div class="preview"></div>
+				<button>预览</button>
+			</div>
+			<div class="footer">
+				<div class="btnLocate ps-r f-l title-border">
+					<span class="title">按钮位置与坐标</span>
+					<label>起始X坐标<input class="input input-60" type="number"></label>
+					<label>起始Y坐标<input class="input input-60" type="number"></label>
+					<label>按钮间距<input class="input input-60" type="number"></label>
+				</div>
+				<div class="other f-l">
+					<div>
+						<label for="useHori"><input type="checkbox" id="useHori">使用横向排布</label>
+					</div>
+					<div>
+						<label for="useFree"><input type="checkbox" id="useFree">使用自由坐标</label>
+					</div>
+					<div>
+						<button>复位</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="item-dialog tab-item">
+		<div class="header">
+			<div class="dialog-style ps-r title-border f-l">
+				<span class="title">对话框样式</span>
+				<div class="mb-15">
+					<span>
+						<label>姓名框</label>
+						<input class="input input-100" type="text" readonly>
+					</span>
+					<span>
+						<label>头像框</label>
+						<input class="input input-100" type="text" readonly>
+					</span>
+				</div>
+				<div>
+					<span>
+						<label>对话框</label>
+						<input class="input input-100" type="text" readonly>
+					</span>
+					<span>
+						<label>选择框</label>
+						<input class="input input-100" type="text" readonly>
+					</span>
+				</div>
+			</div>
+			<div class="headImg-style ps-r f-l title-border">
+				<span class="title">头像样式</span>
+				<ul class="style-select hidden">
+					<li>
+						<label for="bust"><input type="radio" id="bust">半身像样式</label>
+						<span></span>
+					</li>
+					<li>
+						<label for="inside"><input type="radio" id="inside">内框式</label>
+						<span></span>
+					</li>
+					<li>
+						<label for="ouside"><input type="radio" id="ouside">外框式</label>
+						<span></span>
+					</li>
+				</ul>
+				<div>提示：头像效果可在预览中查看</div>
+			</div>
+			<div class="detail-setting ps-r f-l title-border">
+				<span class="title">详细设置</span>
+				<button class="title-border">对话框设置</button>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="dialog-preview ps-r title-border">
+			<span class="title">对话框</span>
+			<div></div>
+		</div>
+		<div class="footer">
+			<button class="title-border">复位</button>
+			<button class="title-border preview">预览</button>
+		</div>
+	</div>
+	<div class="item-picoption tab-item">
+		<div class="f-l">
+			<ul class="list" id="DButton">
+			</ul>
+			<button>更改最大值</button>
+		</div>
+		<div class="f-r">
+			<div class="name">
+				<label>名称</label>
+				<input type="text">
+			</div>
+			<div class="pic ps-r title-border">
+				<span class="title">图片</span>
+				<div class="btn-pic hidden">
+					<div class="f-l">
+						<div>
+							<label>未点击图片</label>
+							<input class="input input-150" type="text" readonly>
+						</div>
+						<div class="pic-preview"></div>
+					</div>
+					<div class="f-r">
+						<div>
+							<label>点击图片</label>
+							<input class="input input-150" type="text" readonly>
+						</div>
+						<div class="pic-preview"></div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="btn-test ps-r title-border">
+				<span class="title">按钮测试</span>
+				<div class="pic-preview"></div>
+			</div>
+		</div>
+	</div>
+	<div class="item-replay tab-item">
+		<div class="content">
+			<div class="f-l">
+				<div class="bg-pic ps-r title-border">
+					<span class="title">背景图片</span>
+					<div>剧情回放界面背景：</div>
+					<div>
+						<input class="input input-140" type="text" readonly>
+					</div>
+				</div>
+				<div class="limit-area ps-r title-border">
+					<span class="title">回放内容限制区域</span>
+					<ul>
+						<li>
+							<label>原点X坐标：</label>
+							<input class="input input-75 f-r" type="number" id="DSystem['Replay']['viewport']['x']">
+						</li>
+						<li>
+							<label>原点Y坐标：</label>
+							<input class="input input-75 f-r" type="number" id="DSystem['Replay']['viewport']['y']">
+						</li>
+						<li>
+							<label>限制宽度：</label>
+							<input class="input input-75 f-r" type="number" id="DSystem['Replay']['viewport']['width']">
+						</li>
+						<li>
+							<label>限制高度：</label>
+							<input class="input input-75 f-r" type="number" id="DSystem['Replay']['viewport']['height']">
+						</li>
+					</ul>
+				</div>
+				<div class="closebtn-location ps-r title-border">
+					<span class="title">关闭按钮位置</span>
+					<div>按钮图片：</div>
+					<div>
+						<input class="input input-130" type="text" id="DSystem['Replay']['closeButton']['index']" readonly>
+					</div>
+					<div>
+						<label>X坐标:</label>
+						<input class="input input-85" type="number" id="DSystem['Replay']['closeButton']['x']">
+					</div>
+					<div>
+						<label>Y坐标:</label>
+						<input class="input input-85" type="number" id="DSystem['Replay']['closeButton']['y']">
+					</div>
+				</div>
+			</div>
+			<div class="plot-replay f-r ps-r title-border">
+				<span class="title">剧情回放</span>
+				<div class="preview"></div>
+			</div>
+		</div>
+		<button class="f-r">预览</button>
+	</div>
+	<div class="item-appreciate tab-item">
+		<ul class="tab">
+			<li class="active">CG鉴赏</li>
+			<li>BGM鉴赏</li>
+		</ul>
+		<div class="content">
+			<div class="item">
+				<div class="f-l">
+					<ul class="list">
+						<li>001:</li>
+					</ul>
+					<button class="change-largest title-border">更改最大值</button>
+				</div>
+				<div class="f-r">
+					<div class="setting hidden">
+						<div class="f-l">
+							<div>
+								<label class="label50">名称</label>
+								<input class="input input-260" type="text">
+							</div>
+							<div>
+								<label class="label50">文字说明</label>
+								<textarea name=""></textarea>
+							</div>
+						</div>
+						<div class="f-r">
+							<div class="ta-r">
+								<label class="coverlabel">CG图片</label>
+								<input class="input" type="text" readonly>
+							</div>
+							<div class="preview f-r"></div>
+						</div>
+					</div>
+					<div class="interface ps-r title-border">
+						<span class="title">界面</span>
+						<div class="preview f-l"></div>
+						<div class="btn f-r">
+							<div>
+								<button>界面设置</button>
+							</div>
+							<div>
+								<button class="colored">预览</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="f-l">
+					<ul class="list">
+						<li>001:</li>
+					</ul>
+					<button class="change-largest title-border">更改最大值</button>
+				</div>
+				<div class="f-r">
+					<div class="setting hidden">
+						<div class="f-l">
+							<div>
+								<span>
+									<label class="label50">名称</label>
+									<input class="input input-100" type="text">
+								</span>
+								<span>
+									<label class="label38">音乐</label>
+									<input class="input input-100" type="text" readonly>
+								</span>
+
+							</div>
+							<div>
+								<label class="label50">文字说明</label>
+								<textarea name=""></textarea>
+							</div>
+						</div>
+						<div class="f-r">
+							<div class="ta-r">
+								<label class="coverlabel">BGM封面</label>
+								<input class="input" type="text" readonly>
+							</div>
+							<div class="preview f-r">
+
+							</div>
+						</div>
+					</div>
+					<div class="interface ps-r title-border">
+						<span class="title">界面</span>
+						<div class="preview f-l"></div>
+						<div class="btn f-r">
+							<div>
+								<button>界面设置</button>
+							</div>
+							<div>
+								<button>预览</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="item-saveLoad tab-item">
+		<div class="f-l">
+			<div class="total ps-r title-border">
+				<span class="title">总设</span>
+				<div>存档界面背景图片：</div>
+				<div>
+					<input class="input input-160" type="text" readonly>
+				</div>
+				<div class="save-count hidden">
+					<label>最大存档数：</label>
+					<input class="input input-75 f-r" type="number">
+				</div>
+				<div class="checkbox-group">
+					<label for="showname">
+						<input type="checkbox" id="showname">显示剧情名
+					</label>
+					<label for="showdate">
+						<input type="checkbox" id="showdate">显示日期
+					</label>
+					<label for="showscreenshot">
+						<input type="checkbox" id="showscreenshot">显示截图
+					</label>
+				</div>
+			</div>
+			<div class="btn-option ps-r title-border">
+				<span class="title">按钮</span>
+				<div>
+					<label>存档按钮</label>
+					<input class="input input-100" type="text" readonly>
+				</div>
+				<div>
+					<label>关闭按钮</label>
+					<input class="input input-100" type="text" readonly>
+				</div>
+				<div>
+					<label>关闭按钮X坐标:</label>
+					<input class="input input-70" type="number">
+				</div>
+				<div>
+					<label>关闭按钮Y坐标:</label>
+					<input class="input input-70" type="number">
+				</div>
+			</div>
+			<div class="save-limit ps-r title-border">
+				<span class="title">存档内容限制区域</span>
+				<div>
+					<label>原点X坐标:</label>
+					<input class="input input-70" type="number">
+				</div>
+				<div>
+					<label>原点Y坐标:</label>
+					<input class="input input-70" type="number">
+				</div>
+				<div>
+					<label>限制宽度:</label>
+					<input class="input input-70" type="number">
+				</div>
+				<div>
+					<label>限制高度:</label>
+					<input class="input input-70" type="number">
+				</div>
+			</div>
+		</div>
+		<div class="f-r">
+			<div class="savefile ps-r title-border">
+				<span class="title">存档</span>
+				<div class="preview"></div>
+				<div class="layout">
+					<label>最大列数:<input class="input input-70" type="number"></label>
+					<label>行间距:<input class="input input-70" type="number"></label>
+					<label>列间距:<input class="input input-70" type="number"></label>
+					<span class="btns">
+						<button class="btn-reset">复位</button>
+						<button class="btn-preview">预览</button>
+					</span>
+				</div>
+			</div>
+			<div class="save-setting ps-r title-border">
+				<span class="title">存档内容设置</span>
+				<ul>
+					<li>
+						<label>剧情名X坐标:<input class="input input-70" type="number"></label>
+						<label>剧情名Y坐标:<input class="input input-70" type="number"></label>
+					</li>
+					<li>
+						<label>时间X坐标:<input class="input input-70" type="number"></label>
+						<label>时间Y坐标:<input class="input input-70" type="number"></label>
+					</li>
+					<li>
+						<label>截图X坐标:<input class="input input-70" type="number"></label>
+						<label>截图Y坐标:<input class="input input-70" type="number"></label>
+					</li>
+					<li>
+						<label>截图缩放率:</label>
+						<input class="input input-80" type="number">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="item-system tab-item">
+		<div class="f-l">
+			<div class="bg-pic ps-r title-border">
+				<span class="title">背景图</span>
+				<label>系统菜单背景图片</label>
+				<div>
+					<input class="input input-165" type="text" readonly>
+				</div>
+			</div>
+			<div class="btn ps-r title-border">
+				<span class="title">按钮</span>
+				<ul>
+					<li>
+						<label for="frame"><input type="checkbox" id="frame">窗口显示</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="fullScreen"><input type="checkbox" id="fullScreen">全屏显示</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="auto-on"><input type="checkbox" id="auto-on">自动 开</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="auto-off"><input type="checkbox" id="auto-off">自动 关</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="returnTitle"><input type="checkbox" id="returnTitle">返回标题</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+					<li>
+						<label for="close"><input type="checkbox" id="close">关闭</label>
+						<input class="input input-95 f-r" type="text" readonly>
+					</li>
+				</ul>
+			</div>
+			<div class="scroller ps-r title-border">
+				<span class="title">滚动条</span>
+				<div>
+					<label>背景图</label>
+					<input class="input input-95 ta-r f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>拖动图</label>
+					<input class="input input-95 ta-r f-r" type="text" readonly>
+				</div>
+				<div class="checkbox-group">
+					<label for="musicsrcoll">
+						<input type="checkbox" id="musicsrcoll">音乐滚动条
+					</label>
+					<label for="voicesrcoll">
+						<input type="checkbox" id="voicesrcoll">音效滚动条
+					</label>
+					<div>
+						<label for="soundsrcoll">
+							<input type="checkbox" id="soundsrcoll">语音滚动条
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="f-r">
+			<div class="system-menu ps-r">
+				<span class="title">系统菜单</span>
+				<div class="preview"></div>
+				<div class="btns">
+					<button>复位</button>
+					<button class="colored">预览</button>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="sltCtnLocate ps-r f-l title-border">
+					<span class="title">所选内容坐标</span>
+					<div>
+						<label>X坐标:</label><input class="input input-100" type="number">
+					</div>
+					<div>
+						<label>Y坐标:</label><input class="input input-100" type="number">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="item-mall tab-item">
+		<div class="f-l">
+			<div class="mall-setting ps-r title-border">
+				<span class="title">商城设置</span>
+				<div>
+					<label>商城背景</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>右侧立绘</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>充值鲜花</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>打赏作者</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>关闭按钮</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+			</div>
+			<div class="buy-ties ps-r title-border">
+				<span class="title">购买提示</span>
+				<div>
+					<label>购买提示</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>确认购买</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>取消购买</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>购买成功</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div>
+					<label>购买失败</label>
+					<input class="input input-110 f-r" type="text" readonly>
+				</div>
+				<div class="ta-r">
+					<span>预览</span>
+				</div>
+			</div>
+			<div class="goods-setting ps-r title-border">
+				<span class="title">商品设置</span>
+				<div>
+					<label>商品个数</label>
+					<input class="input input-110 f-r ta-r" type="number">
+				</div>
+				<button class="input input-110 f-r">商品详情</button>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+		<div class="f-r">
+			<div class="goods-preview ps-r title-border">
+				<span class="title">商品预览</span>
+				<div></div>
+			</div>
+			<div class="goods-survey ps-r title-border">
+				<span class="title">商品概况</span>
+				<div></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="item-total tab-item">
+		<div class="total-set ps-r title-border f-l">
+			<span class="title">总设</span>
+			<div>
+				<label>作品标题：</label>
+				<input class="input input-185" type="text" name="title">
+				<p>不超过15个汉字或30个英文</p>
+			</div>
+			<div>
+				<label for="skipinterface"><input type="checkbox" id="skipinterface">跳过标题画面</label>
+				<label for="initsave"><input type="checkbox" id="initsave">初始化存档</label>
+			</div>
+			<div>
+				<label for="autoing"><input type="checkbox" id="autoing">自动进行</label>
+			</div>
+			<div class="hidden">
+				<label>工程菜单界面:</label>
+				<select class="input input-165 f-r" name="">
+					<option value="">[系统保留]工程菜单</option>
+				</select>
+			</div>
+			<div class="hidden">
+				<label>起始剧情:</label>
+				<input class="input input-165 f-r" type="text" readonly>
+			</div>
+			<div>当前作品分辨率：<span id="projectsize"></span></div>
+		</div>
+		<div class="font-setting ps-r title-border f-l">
+			<span class="title">字体</span>
+			<div>
+				<label>选择字体:</label>
+				<input class="input input-140" type="text" readonly>
+			</div>
+			<div>
+				<label>字体大小:</label>
+				<input class="input input-140" type="number" name="FontSize">
+			</div>
+			<div class="font-preview">效果</div>
+			<div>
+				<span class="default-color">
+					<label>对话默认颜色:</label>
+					<span></span>
+				</span>
+				<span class="default-color">
+					<label>UI默认颜色:</label>
+					<span></span>
+				</span>
+			</div>
+			<div class="hidden">
+				<label>文字效果:</label>
+				<select class="input input-140 f-r" name="" id="">
+					<option value="">(无效果)</option>
+					<option value="">文字阴影(黑)</option>
+					<option value="">文字阴影(灰)</option>
+					<option value="">文字阴影(白)</option>
+					<option value="">文字描边(黑)</option>
+					<option value="">文字描边(灰)</option>
+					<option value="">文字描边(白)</option>
+				</select>
+			</div>
+		</div>
+		<div class="others f-l">
+			<div class="system-voice ps-r title-border">
+				<span class="title">系统音效</span>
+				<div class="voice-item f-l">
+					<label class="ds-bl">确定音效:</label>
+					<input class="input input-110" type="text" readonly>
+				</div>
+				<div class="voice-item f-r">
+					<label class="ds-bl">鼠标经过音效:</label>
+					<input class="input input-110" type="text" readonly>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="output-skin ps-r title-border">
+				<span class="title">导出作品皮肤</span>
+				<button class="input input-110 f-l">更换作品皮肤</button>
+				<button class="input input-110 f-r">导出作品皮肤</button>
+				<div class="clearfix"></div>
+			</div>
+			<div class="gif-make ps-r title-border">
+				<span class="title">动态图制作</span>
+				<button class="input input-110">动态图制作</button>
+			</div>
+		</div>
+	</div>
+	<div class="btn-group">
+		<button class="confirm">确定</button>
+		<button class="layer-close">关闭</button>
+		<button class="apply">应用</button>
+	</div>
+</div>
+<script>
+
+var DHeader = parent.PData.data.DHeader;
+var DSystem = parent.PData.data.DSystem;
+
+$('input[name="title"]').val(DHeader.title);
+$('#projectsize').html(DHeader.GWidth+"*"+DHeader.GHeight);
+
+$('input[name="FontSize"]').val(DSystem.FontSize);
+
+var DButton = DSystem.DButton;
+for (var i in DButton) {
+	var no = '00'+i;
+	no = no.substring(no.length-3,no.length);
+	var li = $('<li data-id="' + i + '">'+no+' : ' + DButton[i].name + '</li>');
+	li.click(function () {
+
+	});
+	$("#DButton").append(li);
+}
+
+	$(".tab-item").first().show();
+	$(".tab-box li").each(function (i) {
+		$(this).click(function () {
+			$(".tab-box li").removeClass('active').eq(i).addClass('active');
+			$(".tab-item").hide().eq(i).show();
+		});
+	});
+	$(".item").first().show();
+	$(".item-appreciate .tab li").each(function (i) {
+		$(this).click(function () {
+			$(".item-appreciate .tab li").removeClass('active').eq(i).addClass('active');
+			$(".item").hide().eq(i).show();
+		});
+	});
+	//关闭弹窗
+	$('.layer-close').eq(0).click(function () {
+		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+		console.log('关闭:'+index);
+		parent.layer.close(index);
+		layer.close()
+	})
+</script>
+</body>
+</html>

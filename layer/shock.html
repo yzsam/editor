@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>画面震动</title>
+    <!-- jquery ui -->
+    <link rel="stylesheet" type="text/css" href="../js/JQuerySlider/css/jqueryui.min.css">
+    <!-- slider -->
+    <link rel="stylesheet" href="../js/JQuerySlider/css/jquery-ui-slider-pips.min.css" />
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        .container {
+            padding: 25px 15px 15px;
+            overflow: hidden;
+        }
+        .input{
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .input-50{
+            width: 50px;
+            text-align: right;
+        }
+        .input-70{
+            width: 70px;
+            text-align: right;
+        }
+        .title-border {
+            color: #434343;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .shock-setting {
+            position: relative;
+            padding: 25px 20px 20px;
+        }
+        .shock-setting>div{
+            margin-bottom: 5px;
+        }
+        .title{
+            position: absolute;
+            top: -10px;
+            left: 6px;
+        }
+        .mark {
+            margin-left: 25px;
+            color: red;
+        }
+        .time {
+            position: relative;
+            margin-right: 5px;
+            padding: 10px;
+        }
+        .time input{
+            margin-right: 5px;
+        }
+        .footer {
+            margin-top: 15px;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+        .btn-group button{
+            width: 75px;
+            height: 30px;
+            margin-left: 10px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+
+        /*slider*/
+        #strength label,#speed label{
+            margin-right: 5px;
+            vertical-align: top;
+        }
+        #strength input,#speed input{
+            margin-left: 10px;
+            vertical-align: bottom;
+        }
+        .dragger{
+            display: inline-block;
+            width: 135px;
+        }
+        span.ui-state-default.ui-slider-handle.ui-corner-all{
+            top: -1px;
+            width: 10px;
+            height: 20px;
+            margin-left: -5px;
+            background: white;
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            transform: translateY(-35%);
+        }
+        span.ui-slider-horizontal {
+            height: 3px;
+            border-top: solid 1px #999;
+            background: #dedee0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="shock-setting title-border">
+            <span class="title">震动</span>
+            <div id="strength">
+                <label>强度：</label>
+                <span class="slider dragger"></span>
+                <input class="input input-50" type="number" min="1" max="9" value="1">
+            </div>
+            <div id="speed">
+                <label>速度：</label>
+                <span class="slider dragger"></span>
+                <input class="input input-50" type="number" min="1" max="9" value="1">
+            </div>
+            <div class="chkbox">
+                <label for="shockcycle">
+                    <input type="checkbox" name="" id="shockcycle">循环震动
+                </label>
+                <span class="mark">*时间为0，即停止震动</span>
+            </div>
+        </div>
+        <div class="footer">
+            <span class="time title-border">
+                <label class="title">时间</label>
+                <input class="input input-70" type="number" min="0" name="time">帧
+            </span>
+            <span class="btn-group">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+        </div>
+    </div>
+    <script src="../js/JQuerySlider/js/jquery-plus-ui.min.js"></script>
+    <script src="../js/JQuerySlider/js/jquery-ui-slider-pips.js"></script>
+    <script>
+        $(function () {
+            /*$.getUrlParam("id")报错，故从自定义jq组件拆出来*/
+            var state;
+            var reg = new RegExp("(^|&)id=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                state = unescape(r[2])
+            }else{
+                state = null
+            }/*end*/
+            if(state){
+                var i = state;
+                var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+
+                $("#strength .slider").slider({value:data.Argv[0]})
+                $("#speed .slider").slider({value:data.Argv[1]})
+                $("#strength input").val(data.Argv[0]);
+                $("#speed input").val(data.Argv[1]);
+                if(data.Argv[2] != 0){
+                    $('#shockcycle').attr('checked',true)
+                }
+                $('input[name="time"]').val(data.Argv[3]);
+            }
+            //确定
+            $('.confirm').eq(0).click(function () {
+                /*数据修改*/
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0] = $("#strength input").val();
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[1] = $("#speed input").val();
+                if($('#shockcycle').is(":checked")){
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[2] = 1;
+                }else{
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[2] = 0;
+                }
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[3] = $('input[name="time"]').val();
+                /*列表刷新*/
+                parent.Vlist();
+                /*弹出框关闭*/
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                console.log('关闭:' + index);
+                parent.layer.close(index);
+                layer.close()
+            })
+            //关闭弹窗
+            $('.layer-close').eq(0).click(function () {
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                console.log('关闭:'+index);
+                parent.layer.close(index);
+                layer.close()
+            })
+
+            //slider
+            $("#strength .slider").slider({ //设置取值的范围，最大值和最小值
+                min:1,
+                max: 9
+            }).slider("pips", { //浮标格式
+                first: "pip",
+                last: "pip"
+            }).on("slidechange", function(e,ui) { //浮标改变的回调
+                $("#strength input").val(ui.value);
+            });
+            $("#strength input").on('input',function(){ //输入框输入值的回调
+                $("#strength .slider").slider({
+                    value:$(this).val()
+                })
+            });
+
+            $("#speed .slider").slider({ //设置取值的范围，最大值和最小值
+                min:1,
+                max: 9
+            }).slider("pips", { //浮标格式
+                first: "pip",
+                last: "pip"
+            }).on("slidechange", function(e,ui) { //浮标改变的回调
+                $("#speed input").val(ui.value);
+            });
+            $("#speed input").on('input',function(){ //输入框输入值的回调
+                $("#speed .slider").slider({
+                    value:$(this).val()
+                })
+            })
+        })
+    </script>
+</body>
+</html>

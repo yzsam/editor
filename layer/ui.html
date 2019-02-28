@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>高级UI设置</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        ul,ol,li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .f-l{float:left}
+        .f-r{float:right}
+        .container {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .content {overflow: hidden}
+        .edit button {
+            width: 110px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+        }
+        .name input{
+            width: 205px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            box-sizing: border-box;
+        }
+        .preview {
+            width: 660px;
+            height: 370px;
+            margin-top: 10px;
+            border: solid 1px #dedee0;
+            background-image: url("../img/e.jpg");
+        }
+        .list {
+            width: 215px;
+            height: 390px;
+            border: solid 1px #dedee0;
+            box-sizing: border-box;
+        }
+        .setNum {
+            width: 215px;
+            height: 30px;
+            margin-top: 10px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group {
+            margin-top: 15px;
+        }
+        .btn-group button{
+            width: 100px;
+            height: 30px;
+            margin-right: 15px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            margin-right: 0;
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="f-l">
+                <div class="edit">
+                    <span class="name">
+                        <label>名称:</label>
+                        <input type="text">
+                    </span>
+                    <button class="f-r">编辑</button>
+                </div>
+                <div class="preview"></div>
+            </div>
+            <div class="f-r">
+                <ul class="list">
+                    <li>001:</li>
+                </ul>
+                <button class="setNum">设置高级UI的数量</button>
+            </div>
+        </div>
+        <div class="btn-group">
+            <span class="btn-operate">
+                <button>导入高级UI</button>
+                <button>导出高级UI</button>
+                <button>菜单,出来</button>
+            </span>
+            <button class="confirm f-r">确定</button>
+        </div>
+    </div>
+</body>
+</html>
