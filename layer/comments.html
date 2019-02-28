@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>注释</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+
+        .comments {
+            padding: 20px;
+        }
+
+        .comments textarea {
+            width: 270px;
+            height: 85px;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .btn-group {
+            text-align: right;
+        }
+
+        .btn-group button {
+            width: 75px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+        }
+
+        .btn-group button.confirm {
+            color: white;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+<div class="comments">
+    <textarea></textarea>
+    <div class="btn-group">
+        <button class="confirm">确定</button>
+        <button class="layer-close">取消</button>
+    </div>
+</div>
+<script>
+    $(function () {
+        if($.getUrlParam("id")){
+            //数据代入
+            var i = $.getUrlParam("id");
+            var w = parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0];
+            $("textarea").eq(0).val(w);
+        }
+        //确定
+        $('.confirm').eq(0).click(function () {
+            /*数据修改*/
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0] = $("textarea").eq(0).val();
+            /*列表刷新*/
+            parent.Vlist();
+            /*弹出框关闭*/
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            layer.close()
+        })
+
+        //取消
+        $('.layer-close').eq(0).click(function () {
+            //关闭弹窗
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>二周目数值</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+
+        .numerical {
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .f-l {
+            float: left;
+        }
+
+        .f-r {
+            float: right;
+        }
+
+        .ta-r {
+            text-align: right
+        }
+
+        .input {
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .input-75 {
+            width: 75px;
+        }
+
+        .input-80 {
+            width: 80px;
+        }
+
+        .input-100 {
+            width: 100px;
+        }
+
+        .input-185 {
+            width: 185px;
+        }
+
+        .value-operate {
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
+        .value, .operation {
+            padding: 10px 10px 5px 10px;
+        }
+
+        .value div {
+            margin-bottom: 5px
+        }
+
+        .title {
+            position: absolute;
+            top: -10px;
+            left: 6px;
+        }
+
+        .value, .operation, .value-setting {
+            position: relative;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+
+        .value-setting input {
+            text-align: right;
+        }
+
+        .value-setting {
+            padding: 10px 10px 5px;
+        }
+
+        .value-setting > div {
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .value-setting > div:last-child {
+            margin-bottom: 0;
+        }
+
+        .randomNum {
+            width: 80px;
+            height: 25px;
+            box-sizing: border-box;
+        }
+
+        .randomNum:first-child {
+            margin-right: 6px;
+        }
+
+        .randomNum:last-child {
+            margin-left: 6px;
+        }
+
+        #failedLabel {
+            display: none;
+        }
+
+        .btn-group {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .btn-group button {
+            width: 75px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .btn-group button.confirm {
+            margin-right: 5px;
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+<div class="numerical">
+    <div class="value-operate">
+        <div class="value f-l">
+            <span class="title">数值</span>
+            <div>
+                <label><input name="valueRadio" type="radio">指定数值</label>
+                <input class="input input-100" type="text" readonly>
+            </div>
+            <div>
+                <label><input name="valueRadio" type="radio">索引数值</label>
+                <input class="input input-100" type="text" readonly>
+            </div>
+        </div>
+        <div class="operation f-r">
+            <span class="title">操作</span>
+            <select class="input input-75" name="operate">
+                <option value="0">=(等于)</option>
+                <option value="1">+=(加法)</option>
+                <option value="2">-=(减法)</option>
+                <option value="3">*=(乘法)</option>
+                <option value="4">/=(除法)</option>
+                <option value="5">%=(求余)</option>
+            </select>
+        </div>
+    </div>
+    <div class="value-setting">
+        <span class="title">将数值设定为</span>
+        <div>
+            <label for="localNum"><input type="radio" name="settingRadio" id="localNum">固定数</label>
+            <input class="input input-185 f-r" type="number" name="localNum">
+        </div>
+        <div>
+            <label for="otherVal"><input type="radio" name="settingRadio" id="otherVal">其他数值</label>
+            <input class="input input-185 f-r" type="text" name="otherVal" readonly disabled>
+        </div>
+        <div>
+            <label for="twoVal"><input type="radio" name="settingRadio" id="twoVal">二周目数值</label>
+            <input class="input input-185 f-r" type="text" name="twoVal" readonly disabled>
+        </div>
+        <div>
+            <label for="random"><input type="radio" name="settingRadio" id="random">随机数</label>
+            <span class="f-r">
+                    <input type="number" class="randomNum input-80 input ta-r" disabled>～<input type="number"
+                                                                                                class="randomNum input-80 input ta-r"
+                                                                                                disabled>
+                </span>
+        </div>
+        <div>
+            <label for="indexVal"><input type="radio" name="settingRadio" id="indexVal">索引数值</label>
+            <input class="input input-185 f-r" type="number" name="indexVal" disabled>
+        </div>
+        <div>
+            <label for="serviceTime"><input type="radio" name="settingRadio" id="serviceTime">服务器时间</label>
+            <select class="input input-185 f-r" name="serviceTime" disabled>
+                <option value="year">当前年</option>
+                <option value="month">当前月</option>
+                <option value="day">当前日</option>
+            </select>
+            <br>
+            <label for="failed" id="failedLabel" class="f-r input-185"><input type="checkbox"
+                                                                              id="failed">未获取成功返回-1</label>
+        </div>
+        <div>
+            <label for="localTime"><input type="radio" name="settingRadio" id="localTime">本地时间</label>
+            <select class="input input-185 f-r" name="localTime" disabled>
+                <option value="year">当前年</option>
+                <option value="month">当前月</option>
+                <option value="day">当前日</option>
+            </select>
+        </div>
+    </div>
+    <div class="btn-group">
+            <span class="seior-setting f-l">
+                <button>高级设置</button>
+            </span>
+        <span>
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+    </div>
+</div>
+<script>
+    $(function () {
+        var i = $.getUrlParam("id");
+        $(".tab-item").first().show();
+        if (i) {
+            var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+            $('input[ name="valueRadio"]')[data.Argv[5]].checked = true;
+            $($('input[ name="valueRadio"]')[data.Argv[5]]).parent('label').next('input').val(data.Argv[0])
+            $('select[name="operate"]').val(data.Argv[1])
+            // $('select[name="operate"] option[value="'+data.Argv[1]+'"]').attr('seleted','seleted')
+            $('input[ name="settingRadio"]')[data.Argv[2]].checked = true;
+            if (data.Argv[2] == 0) {
+                $('input[name="localNum"]').val(data.Argv[3])
+            } else if (data.Argv[2] == 1) {
+                $('input[name="otherVal"]').val(data.Argv[3])
+            } else if (data.Argv[2] == 2) {
+                $('input[name="twoVal"]').val(data.Argv[3])
+            } else if (data.Argv[2] == 3) {
+                alert('随机数有两个，具体按数值而定')
+                // $('#random').val(data.Argv[3])
+            } else if (data.Argv[2] == 4) {
+                $('input[name="indexVal"]').val(data.Argv[3])
+            } else if (data.Argv[2] == 5) {
+                alert('服务器时间-下拉选项')
+                $('#failedLabel').show()
+            } else if (data.Argv[2] == 6) {
+                alert('本地时间-下拉选项')
+            }
+            if (data.Argv[4] != 0) {
+                $('#condition').attr('checked', 'checked')
+            } else {
+                $('#condition').removeAttr('checked')
+            }
+        }
+        $('input[name="settingRadio"]').each(function (i) {
+            $(this).click(function () {
+                $('.value-setting .input').attr('disabled', 'disabled')
+                $(this).parent('label').nextAll('input,select').removeAttr('disabled')
+                $(this).parent('label').next('span').children('input').removeAttr('disabled')
+                if (i == 5) {
+                    $('#failedLabel').show()
+                } else {
+                    $('#failedLabel').hide()
+                }
+            })
+        })
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>显示远景图</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            overflow-x: hidden;
+            font-size: 12px;
+        }
+        .mb-5{margin-bottom: 5px}
+        .f-l{float: left;}
+        .f-r{float: right;}
+        .ta-r{text-align: right}
+        .ps-r {position: relative}
+        .hidden{overflow: hidden}
+        .clearfix{
+            content: '';
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+        .title{
+            position: absolute;
+            left: 6px;
+            top: -10px;
+        }
+        .vista {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .title-border {
+            color: #434343;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .preview{
+            width: 640px;
+            padding: 10px 0;
+        }
+        .preview-content{
+            position: relative;
+            width: 620px;
+            height: 350px;
+            margin: 0 auto;
+            background-image: url("../img/e.jpg");
+            overflow: hidden;
+        }
+        .mask {
+            position: absolute;
+            width: 465px;
+            height: 262px;
+            top: 45px;
+            left: 80px;
+            box-shadow: rgba(0, 0, 0, .6) 0 0 0 1366px;
+            z-index: 50;
+        }
+        .picsetting {
+            width: 350px;
+        }
+        .size>label,.showLocateion label {
+            display: block;
+        }
+        .input-110{
+            display: inline-block;
+            width: 110px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .input-80{
+            display: inline-block;
+            width: 80px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .input-60{
+            display: inline-block;
+            width: 60px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .showLocateion,.other {
+            margin-top: 10px;
+        }
+        .showLocateion {
+            padding: 10px 10px 25px;
+        }
+        .btn-group {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .btn-group button{
+            width: 75px;
+            height: 30px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+        .shape {
+            padding: 10px 5px;
+        }
+        .shape>div{
+            margin-bottom: 5px;
+        }
+        .shapeNum {
+            margin-top: 25px;
+        }
+        .size {
+            padding: 5px 15px;
+        }
+        .size input{
+            margin-left: 10px
+        }
+        .opacity {
+            padding: 5px;
+        }
+        .btn-opacity{margin-bottom: 5px}
+        .btn-opacity button{
+            width: 55px;
+            height: 20px;
+            margin-right: 5px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            font-size: 10px;
+        }
+        .btn-opacity button:last-child{
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vista">
+        <div class="f-l ps-r title-border">
+            <span class="title">预览</span>
+            <div class="preview">
+                <div class="preview-content">
+                    <div class="mask"></div>
+                </div>
+            </div>
+        </div>
+        <div class="picsetting f-r">
+            <div>
+                <span class="f-l shapeNum">
+                    <label>编号：</label>
+                    <input class="input-60" type="number">
+                </span>
+                <div class="shape f-r title-border ps-r">
+                    <span class="title">图片图形</span>
+                    <div class="hidden">
+                        <label for="local"><input type="radio" name="" id="local">使用指定图片</label>
+                        <input class="input-110 f-r" type="text" readonly>
+                    </div>
+                    <div class="hidden">
+                        <label for="stringlocal"><input type="radio" name="" id="stringlocal">字符串指定图片</label>
+                        <input class="input-110 f-r" type="text" readonly>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="showLocateion title-border ps-r">
+                <span class="title">显示位置</span>
+                <div>
+                    <span class="f-l">
+                        <label for="directlocal"><input type="radio" name="" id="directlocal">直接指定</label>
+                        <label class="mb-5">X: <input class="input-110 ta-r" type="number"></label>
+                        <label>Y: <input class="input-110 ta-r" type="number"></label>
+                    </span>
+                    <span class="f-r">
+                        <label for="valuelocal"><input type="radio" name="" id="valuelocal">使用数值指定</label>
+                        <label class="mb-5">X: <input class="input-110" type="text" readonly></label>
+                        <label>Y: <input class="input-110" type="text" readonly></label>
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="other">
+                <span class="size f-l title-border ps-r">
+                    <span class="title">缩放率</span>
+                    <label class="mb-5">X: <input class="input-80 ta-r" type="number"></label>
+                    <label>Y: <input class="input-80 ta-r" type="number"></label>
+                    <span>锚点 <label for="reset"><input type="radio" id="reset">复位</label></span>
+                </span>
+                <span class="opacity f-r title-border ps-r">
+                    <span class="title">其他</span>
+                    <div class="mb-5 hidden">
+                        <label>不透明度:</label>
+                        <input class="f-r input-110 ta-r" type="number">
+                    </div>
+                    <div class="btn-opacity">
+                        <button>透明</button>
+                        <button>半透明</button>
+                        <button>不透明</button>
+                    </div>
+                    <span>图片放置：<label for="image"><input type="checkbox" id="image">镜像</label></span>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="btn-group">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:'+index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    </script>
+</body>
+</html>

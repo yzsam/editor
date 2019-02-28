@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>发射气泡</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+
+        ul, ol, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .f-l {
+            float: left
+        }
+
+        .f-r {
+            float: right
+        }
+
+        .launch {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .mr-25{margin-right: 25px}
+        .list {
+            width: 200px;
+            height: 500px;
+            border: solid 1px #dedee0;
+            box-sizing: border-box;
+        }
+
+        .list li {
+            padding: 5px 0 5px 25px;
+        }
+
+        .crt-setting {
+            width: 200px;
+            height: 30px;
+            margin-top: 5px;
+            background: white;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+
+        .info-setting {
+            overflow: hidden;
+        }
+        .info-setting li{
+            height: 25px;
+            margin-bottom: 10px;
+        }
+        .info-setting li > input, .info-setting li select {
+            width: 130px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 2px;
+            box-sizing: border-box;
+        }
+
+        .bubble-ctx {
+            width: 550px;
+            height: 190px;
+            background: white;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+
+        .type {
+            position: relative;
+            border-bottom: solid 1px #ccc;
+        }
+
+        .type ul {
+            overflow: hidden;
+        }
+
+        .type li {
+            padding: 12px 25px;
+        }
+        .type li.active{color: #ffac28}
+        .type button {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            width: 80px;
+            height: 25px;
+            color: #ffac28;
+            font-size: 12px;
+            border: solid 1px #ffac28;
+            border-radius: 5px;
+            background: white;
+            transform: translateY(-50%);
+        }
+
+        .type-content div {
+            display: none;
+        }
+        .type-content textarea{
+            width: 545px;
+            height: 145px;
+            resize: none;
+            border: none;
+        }
+        .operate {
+            margin: 15px 0 10px;
+            overflow: hidden;
+        }
+        .bb-preview {
+            width: 550px;
+            height: 150px;
+            margin-top: 15px;
+            background-image: url('../img/e.jpg');
+        }
+        .location label{
+            margin-left: 15px;
+        }
+        .location label:first-child {
+            margin-left: 0;
+        }
+
+        .btn-group button {
+            width: 90px;
+            height: 30px;
+            margin-left: 20px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .btn-group button.confirm {
+            margin-right: 5px;
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+<div class="launch">
+    <div class="f-l">
+        <div class="list">
+            <ul>
+                <li>001:</li>
+                <li>002:</li>
+                <li>003:</li>
+                <li>004:</li>
+                <li>005:</li>
+                <li>006:</li>
+                <li>007:</li>
+                <li>008:</li>
+                <li>009:</li>
+                <li>010:</li>
+            </ul>
+        </div>
+        <button class="crt-setting">人物设置</button>
+    </div>
+    <div class="f-r">
+        <div class="info-setting">
+            <ul class="f-l">
+                <li>
+                    <label>气泡编号</label>
+                    <select name="" id=""></select>
+                </li>
+                <li>
+                    <label>姓名</label>
+                    <input class="f-r" type="text">
+                </li>
+                <li>
+                    <label>头像</label>
+                    <input class="f-r" type="text" readonly>
+                </li>
+                <li>
+                    <label>气泡框</label>
+                    <input class="f-r" type="text" readonly>
+                </li>
+            </ul>
+            <ul class="f-r mr-25">
+                <li>
+                    <label>气泡备注名</label>
+                    <select name="" id=""></select>
+                </li>
+                <li>
+                    <label>位置</label>
+                    <span class="f-r location">
+                        <label for="left">
+                            <input type="radio" name="" id="left">左
+                        </label>
+                        <label for="mid">
+                            <input type="radio" name="" id="mid">中
+                        </label>
+                        <label for="right">
+                            <input type="radio" name="" id="right">右
+                        </label>
+                    </span>
+
+                </li>
+                <li>
+                    <label>效果音效</label>
+                    <input class="f-r" type="text" readonly>
+                </li>
+                <li>
+                    <label>发射效果</label>
+                    <select class="f-r" name="" id="">
+                        <option value="">无</option>
+                        <option value="" selected>直接淡入</option>
+                        <option value="">Q弹展开</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <div class="bubble-ctx">
+            <div class="type">
+                <ul>
+                    <li class="f-l active">文字</li>
+                    <li class="f-l">图片</li>
+                    <li class="f-l">语音</li>
+                </ul>
+                <button>导入气泡</button>
+            </div>
+            <div class="type-content">
+                <div>
+                    <textarea name="" id=""></textarea>
+                </div>
+                <div>
+                    <span>添加大图</span>
+                    <span>添加缩略图</span>
+                </div>
+                <div>
+                    <span>添加音乐</span>
+                </div>
+            </div>
+        </div>
+        <div class="operate">
+            <a href="">气泡教程</a>
+            <span class="f-r">
+                <label for="launch-ckbox">
+                    <input type="checkbox" id="launch-ckbox">连续发射
+                </label>
+                <span class="btn-group">
+                    <button class="confirm">确定</button>
+                    <button class="layer-close">取消</button>
+                </span>
+            </span>
+        </div>
+        <div class="bb-preview"></div>
+    </div>
+</div>
+<script>
+    $(".type-content").eq(0).find("div").first().show();
+    $(".type li").each(function (i) {
+        $(this).click(function () {
+            $(".type li").removeClass('active').eq(i).addClass('active');
+            $(".type-content div").hide().eq(i).show();
+        });
+    });
+    //关闭弹窗
+    $('.layer-close').eq(0).click(function () {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        console.log('关闭:'+index);
+        parent.layer.close(index);
+        layer.close()
+    })
+</script>
+</body>
+</html>

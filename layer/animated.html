@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>显示动态图</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            overflow-x: hidden;
+            font-size: 12px;
+        }
+        ul,ol,li{list-style: none;padding: 0;margin: 0}
+        .f-l{float: left;}
+        .f-r{float: right;}
+        .ps-r{position: relative}
+        .ta-r{text-align: right}
+        .clearfix{
+            content: '';
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+        .title{
+            position: absolute;
+            top: -10px;
+            left: 6px;
+        }
+        .animated {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .title-border {
+            color: #434343;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .size>label,.showLocateion label {
+            display: block;
+        }
+        .mb-5{margin-bottom: 5px}
+        .mb-10{margin-bottom: 10px}
+        .mb-15{margin-bottom: 15px}
+        .hidden{overflow: hidden}
+        .input{
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .input-60{
+            width: 60px;
+        }
+        .input-100{
+            width: 100px;
+        }
+        .input-140{
+            width: 140px;
+        }
+        .input-150 {
+            width: 150px;
+        }
+        .input-335 {
+            width: 335px;
+        }
+        .pic-shape {
+            width: 280px;
+            padding: 5px;
+        }
+        .shape .number{
+            padding-top: 6px;
+        }
+        .showLocateion,.other {
+            margin-top: 10px;
+        }
+        .action {
+            width: 290px;
+            height: 190px;
+            padding: 5px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+        .action-table {
+            height: 175px;
+            border: solid 1px #dedee0;
+            background: white;
+        }
+        .action-table ul{
+            display: flex;
+            width: 100%;
+        }
+        .action-table li{
+            float: left;
+            flex: 1;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            border-right: solid 1px #dedee0;
+            background: #ebeef4;
+        }
+        .action-table li:last-child {
+            border-right: none;
+        }
+        .showLocateion {
+            padding: 5px 10px 10px;
+        }
+        .size {
+            padding: 15px 10px 10px;
+        }
+        .size input{
+            margin-left: 10px;
+        }
+        .opacity {
+            padding: 5px 10px;
+        }
+        .opacity label input:first-child{
+            margin-left: 15px;
+        }
+        .btn-opacity {
+            margin: 6.5px 0;
+        }
+        .btn-opacity button{
+            width: 60px;
+            height: 25px;
+            margin-right: 15px;
+            border:solid 1px #dedee0;;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+            font-size: 10px;
+        }
+        .btn-opacity button:last-child{
+            margin-right: 0;
+        }
+        .fault-pic {
+            margin-top: 10px;
+        }
+        .extra-control {
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .btn-group {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .btn-group button{
+            width: 75px;
+            height: 30px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+<div class="animated">
+    <div class="picsetting f-l">
+        <div class="shape">
+            <span class="f-l number">
+                <label>编号：</label>
+                <input class="input input-60 ta-r" type="number">
+            </span>
+            <div class="pic-shape f-r title-border ps-r">
+                <span class="title">图片图形</span>
+                <div>
+                    <label for="local"><input type="radio" name="" id="local">使用指定图片</label>
+                    <input class="input input-150 f-r" type="text" readonly>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="showLocateion ps-r title-border">
+            <span class="title">显示位置</span>
+            <div>
+                <span class="f-l">
+                    <label class="mb-5" for="directlocal"><input type="radio" name="" id="directlocal">直接指定</label>
+                    <label class="mb-10">X: <input class="input input-140 ta-r" type="number"></label>
+                    <label>Y: <input class="input input-140 ta-r" type="number"></label>
+                </span>
+                <span class="f-r">
+                    <label class="mb-5" for="valuelocal"><input type="radio" name="" id="valuelocal">使用数值指定</label>
+                    <label class="mb-10">X: <input class="input input-140" type="text" readonly></label>
+                    <label>Y: <input class="input input-140" type="text" readonly></label>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="other">
+            <span class="size f-l ps-r title-border">
+                <span class="title">缩放率</span>
+                <label class="mb-15">X: <input class="input input-100 ta-r" type="number"></label>
+                <label>Y: <input class="input input-100 ta-r" type="number"></label>
+            </span>
+            <span class="opacity f-r ps-r title-border">
+                <span class="title">其他</span>
+                <label>不透明度:<input class="input input-140 ta-r" type="number"></label>
+                <div class="btn-opacity">
+                    <button>透明</button>
+                    <button>半透明</button>
+                    <button>不透明</button>
+                </div>
+                <span>图片放置：<label for="image"><input type="checkbox" id="image">镜像</label></span>
+            </span>
+            <div class="clearfix"></div>
+        </div>
+        <div class="fault-pic">
+            <label>容错图:</label>
+            <input class="input input-335 f-r" type="text" readonly>
+        </div>
+    </div>
+    <div class="f-r">
+        <div class="action ps-r title-border">
+            <span class="title">动作</span>
+            <div class="action-table">
+                <ul>
+                    <li>播放</li>
+                    <li>动作</li>
+                    <li>类型</li>
+                </ul>
+            </div>
+        </div>
+        <div class="extra-control title-border ps-r">
+            <span class="title">额外控制</span>
+            <div class="hidden mb-15">
+                <span>
+                    <label for="binding"><input type="checkbox" id="binding">跟随文字绑定</label>
+                </span>
+                    <span class="f-r">
+                    <label>输入姓名：</label>
+                    <input class="input input-100" type="text">
+                </span>
+            </div>
+            <div class="ta-r">
+                <label>快速姓名：</label>
+                <select class="input input-100" name="" id=""></select>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="confirm">确定</button>
+            <button class="layer-close">取消</button>
+        </div>
+    </div>
+</div>
+<script>
+    //关闭弹窗
+    $('.layer-close').eq(0).click(function () {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        console.log('关闭:'+index);
+        parent.layer.close(index);
+        parent.layer.close()
+    })
+</script>
+</body>
+</html>

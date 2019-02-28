@@ -1,0 +1,401 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>移动图片</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            min-width: 966px;
+            min-height: 646px;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        ul,ol,li {list-style: none;padding: 0;margin: 0}
+        .f-l{float: left;}
+        .f-r{float: right;}
+        .ta-r{text-align: right}
+        .ps-r{position: relative}
+        .hidden{overflow: hidden}
+        .mb-5{margin-bottom: 5px}
+        .mb-10{margin-bottom: 10px}
+        .input{
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .input-120{
+            width: 120px;
+        }
+        .input-70{
+            width: 70px;
+        }
+        .input-90{
+            width: 90px;
+        }
+        .title {
+            position: absolute;
+            top: -10px;
+            left: 6px;
+        }
+        .move {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .list {
+            width: 220px;
+            height: 465px;
+            margin-top: 20px;
+            border: solid 1px #dedee0;
+        }
+        .list li{
+            height: 25px;
+            line-height: 25px;
+            padding-left: 12px;
+            border-left: 3px solid transparent;
+            box-sizing: border-box;
+        }
+        .list li:hover{
+            cursor: default;
+            border-left: 3px solid #ffac28;
+            background: white;
+        }
+        .list li.active{
+            color: white;
+            background: #ffac28;
+        }
+        .time {
+            width: 220px;
+            height: 65px;
+            margin-top: 5px;
+            padding: 5px 10px;
+            border: solid 1px #dedee0;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .time input{
+            margin-right: 15px;
+        }
+        .time label{
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
+        .setting {overflow: hidden;padding-top: 10px}
+        .targetLocate,.size,.other {
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+        .size {
+            padding: 10px;
+        }
+        .size .scale span{
+            margin-right: 15px;
+        }
+        .size .scale label{
+            margin-right: 5px;
+        }
+        .size .anchor span{
+            margin:0 10px 0 35px;
+        }
+        .targetLocate {
+            width: 340px;
+            padding: 10px;
+        }
+        .targetLocate label {
+            display: block;
+        }
+        .targetLocate button{
+            width: 75px;
+            height: 20px;
+            margin: 15px 52px 0 0;
+            border:solid 1px #dedee0;;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+            font-size: 10px;
+        }
+        input[type="radio"]{    vertical-align: sub;}
+        button,input[type="radio"]{cursor: pointer}
+        .targetLocate button:hover,.speedoperate button:hover{
+            background: #f0f0f0;
+        }
+        .targetLocate button:last-child{
+            margin-right: 0;
+        }
+        .other {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+        .other button{
+            width: 55px;
+            height: 20px;
+            margin-top: 5px;
+            margin-right: 35px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+            font-size: 10px;
+            outline: none;
+        }
+        .other button:last-child{
+            margin-right: 0;
+        }
+        .preview {
+            width: 690px;
+            height: 410px;
+            margin-top: 10px;
+            padding: 10px 5px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .prev-content {
+            position: relative;
+            width: 100%;
+            width: 100%;
+            height: 100%;
+            background-image: url("../img/e.jpg");
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .mask,.contentImg{
+            position: absolute;
+            width: 510px;
+            height: 285px;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            box-shadow: rgba(0, 0, 0, .6) 0 0 0 1366px;
+            z-index: 50;
+        }
+        .contentImg{
+            z-index: 40;
+            box-shadow:none;
+        }
+        .contentImg img{
+            height: 285px;
+        }
+        .btn-group {
+            margin-top: 15px;
+            text-align: right;
+        }
+        .btn-group button{
+            width: 75px;
+            height: 30px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="move">
+        <div class="f-l">
+            <div>请选择要操作的图片</div>
+            <ul class="list">
+                <li>自定义移动编号</li>
+            </ul>
+            <div class="time">
+                <div>
+                    <label>ID：</label>
+                    <input class="input input-90 ta-r" type="number" name="id">
+                </div>
+                <div>
+                    <label>时间：</label>
+                    <input class="input input-90 ta-r" type="number" name="time">帧
+                </div>
+            </div>
+        </div>
+        <div class="f-r">
+            <div class="setting">
+                <div class="targetLocate f-l ps-r">
+                    <span class="title">目标位置</span>
+                    <div class="hidden">
+                        <span class="f-l">
+                            <label class="mb-5" for="directlocal"><input type="radio" name="locationRadio" id="directlocal" value="0">直接指定</label>
+                            <label class="mb-10">X: <input class="ta-r input-120 input" type="number" name="directX"></label>
+                            <label>Y: <input class="ta-r input-120 input" type="number" name="directY"></label>
+                        </span>
+                        <span class="f-r">
+                            <label class="mb-5" for="valuelocal"><input type="radio" name="locationRadio" id="valuelocal" value="1">使用数值指定</label>
+                            <label class="mb-10">X: <input class="ta-r input-120 input" type="text" name="valueX" readonly disabled></label>
+                            <label>Y: <input class="ta-r input-120 input" type="text" name="valueY" readonly disabled></label>
+                        </span>
+                    </div>
+                    <div>
+                        <button>居左</button>
+                        <button>居中</button>
+                        <button>居右</button>
+                    </div>
+                </div>
+                <div class="other-operate f-r">
+                    <div class="size ps-r">
+                        <span class="title">缩放选项</span>
+                        <div class="scale">
+                            <span>比例</span>
+                            <label>宽：<input class="ta-r input input-70" type="number" name="scaleW">%</label>
+                            <label>高：<input class="ta-r input input-70" type="number" name="scaleH">%</label>
+                        </div>
+                        <div class="anchor">
+                            <span>锚点</span>
+                            <label for="center"><input type="radio" id="center">中心</label>
+                            <label for="lefttop"><input type="radio" id="lefttop">左上</label>
+                            <label for="self"><input type="radio" id="self">自定义</label>
+                        </div>
+                    </div>
+                    <div class="other ps-r">
+                        <span class="title">其他</span>
+                        <div class="noopacity">
+                            <label>不透明度：<input class="ta-r input input-120" type="number" name="opacity"></label>
+                            <label><input type="checkbox">镜像</label>
+                        </div>
+                        <div class="speedoperate">
+                            <label>快速操作：</label>
+                            <span>
+                                <button value="0">透明</button>
+                                <button value="125">半透明</button>
+                                <button value="255">不透明</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="preview ps-r">
+                <span class="title">预览</span>
+                <div class="prev-content">
+                    <div class="contentImg"></div>
+                    <div class="mask"></div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            if ( parent.PData.data.DHeader.GWidth > parent.PData.data.DHeader.GHeight ) {
+                console.log('heng')
+                $('.mask').css({'width':'510px','box-shadow':'rgba(0, 0, 0, .6) 0 0 0 84px'})
+                $('.contentImg').css({'width':'510px'})
+            } else {
+                console.log('shu')
+                $('.prev-content').css({'width':'215px'})
+                $('.mask').css({'width':'80%','box-shadow':'rgba(0, 0, 0, .6) 0 0 0 52px'})
+                $('.contentImg').css({'width':'80%'})
+            }
+            var pArr=[],gArr=[];
+            var i = $.getUrlParam("id");
+            if(i) {
+                var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+                console.log(data.Argv)
+                var m = parent.materialtype.toLowerCase().split('/')[1];
+                var n = parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[1].toLowerCase();
+                var material = parent.PData.material;
+                n=n.replace(/\\/g,'/'); //将\替换成/
+                console.log(parent.realurl(n.split('/').splice(1,n.split('/').length).join(''),'graphics\/background'))
+                if(data.Argv[0]<10){
+                    var idNum = '00'+ data.Argv[0];
+                }else if(data.Argv[0]>=10 && data.Argv[0]<100){
+                    var idNum = '0'+ data.Argv[0];
+                }else {
+                    var idNum = data.Argv[0];
+                }
+                var list_li = '<li class="active">'+idNum+':'+n.split('/')[n.split('/').length-1]+'</li>';
+                $('.list').html(list_li+$('.list').html())
+                for (var j in material) {
+                    var p = material[j][0], g=material[j][2];
+                    pArr.push(p) //把遍历的p数据整理成数组pArr
+                    gArr.push(g)//把遍历的g数据整理成数组gArr
+                    console.log(pArr)
+                    let imageUrl = gArr[pArr.indexOf('graphics/'+n)];//先找到n所在的数组的下标，然后在gArr找到下标相对应的字符编码
+                    if(imageUrl){ //判断遍历时，该字段是否存在
+                        var parentUrl = imageUrl.substring(0,2) //截取字符编码前两位作为格式的父级
+                        $(".contentImg").html('<img src="'+ parent.pichost + parentUrl + '/' + imageUrl+'">');
+                    }
+                }
+                $('.targetLocate input[type="number"],.targetLocate input[type="text"]').attr('disabled','disabled')
+                $('input[name="id"]').val(data.Argv[0])
+                $('input[name="locationRadio"]')[data.Argv[2]].checked = true
+                $($('input[name="locationRadio"]')[data.Argv[2]]).parent().nextAll('label').children('input').removeAttr('disabled')
+                if(data.Argv[2] == 0){
+                    $('input[name="directX"]').val(data.Argv[3])
+                    $('input[name="directY"]').val(data.Argv[4])
+                }else{
+                    $('input[name="valueX"]').val(data.Argv[3])
+                    $('input[name="valueY"]').val(data.Argv[4])
+                }
+                $('.contentImg img').css('opacity',data.Argv[7]/255)
+                $('input[name="opacity"]').val(data.Argv[7])
+                $('input[name="scaleW"]').val(data.Argv[5])
+                $('input[name="scaleH"]').val(data.Argv[6])
+                $('input[name="time"]').val(data.Argv[9])
+            }
+
+            $('.speedoperate button').each(function () {
+                $(this).click(function(){
+                    $('input[name="opacity"]').val($(this).attr('value'))
+                    $('.contentImg img').css('opacity',$(this).attr('value')/255)
+                })
+            })
+
+            $('input[name="locationRadio"]').each(function () {
+                $(this).click(function () {
+                    $('.targetLocate input[type="number"],.targetLocate input[type="text"]').attr('disabled','disabled')
+                    $(this).parent('label').nextAll('label').children('input').removeAttr('disabled')
+                })
+            })
+            //确定
+            $('.confirm').eq(0).click(function () {
+                /*数据修改*/
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0] = $('input[name="id"]').val();
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[2] = $('input[name="locationRadio"]:checked').val();
+                if($('input[name="locationRadio"]:checked').val() == 0){
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[3] = $('input[name="directX"]').val();
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[4] = $('input[name="directY"]').val();
+                }else{
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[3] = $('input[name="valueX"]').val();
+                    parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[4] = $('input[name="valueY"]').val();
+                }
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[5] = $('input[name="scaleW"]').val();
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[6] = $('input[name="scaleH"]').val();
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[7] = $('input[name="opacity"]').val();
+                parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[9] = $('input[name="time"]').val();
+                /*列表刷新*/
+                parent.Vlist();
+                /*弹出框关闭*/
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                console.log(parent.PData.data.Main.DStory[parent.dramatype]._events[i]);
+                parent.layer.close(index);
+                parent.layer.close()
+            })
+
+            //关闭弹窗
+            $('.layer-close').eq(0).click(function () {
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                console.log('关闭:' + index);
+                parent.layer.close(index);
+                parent.layer.close()
+            })
+        })
+    </script>
+</body>
+</html>

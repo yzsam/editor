@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>加载中...</title>
+	<script>var HOST="yzsam.com",api="//"+HOST+"/editor/api/",pichost="//dlcdn1.cgyouxi.com/shareres/",uuid,PData,TmpData={},materialtype='Graphics/Background',dramatype=0,chaptertype=0;</script>
+	<script src="script/jquery/2.1.4/jquery.min.js"></script>
+	<script src="script/jquery/jquery-ui.min.js"></script>
+	<script src="script/jquery/jquery.cookie.js"></script>
+	<script src="script/layer/layer.js"></script>
+	<script src="script/jquery-smartMenu-min.js"></script>
+	<link type="text/css" href="css/jquery-smartMenu.css" rel="stylesheet" />
+	<link type="text/css" href="css/base.css" rel="stylesheet" />
+	<link type="text/css" href="css/style.css" rel="stylesheet" />
+</head>
+
+<body onselectstart="return false">
+<!-- 菜单 -->
+<div id="menu">
+	<div>
+		<span>文件(F)</span>
+		<ul>
+			<li>新建</li>
+			<li>打开</li>
+			<li>最近打开</li>
+			<li>关闭</li>
+			<li>保存</li>
+			<li>另存为</li>
+			<li>发布</li>
+			<li>退出</li>
+		</ul>
+	</div>
+	<div>
+		<span>编辑(E)</span>
+		<ul>
+			<li>撤销</li>
+			<li>重做</li>
+			<li>查找</li>
+			<li>替换</li>
+		</ul>
+	</div>
+	<div>
+		<span>工具(T)</span>
+		<ul>
+			<li>设置</li>
+			<li>工具设置</li>
+			<li>批量导入文本</li>
+			<li>剧本导出</li>
+			<li>一键优化</li>
+			<li>素材库</li>
+			<li>转换为初级模式</li>
+		</ul>
+	</div>
+	<div>
+		<span>工程(G)</span>
+		<ul>
+			<li>运行</li>
+			<li>分段测试</li>
+			<li>工程素材</li>
+			<li>打开工程文件夹</li>
+		</ul>
+	</div>
+	<div>
+		<span>换肤(S)</span>
+		<ul>
+			<li>浅色（适合弱光环境）</li>
+			<li>深色（适合强光环境）</li>
+		</ul>
+	</div>
+	<div>
+		<span>帮助(H)</span>
+		<ul>
+			<li>视频教学</li>
+			<li>反馈问题</li>
+			<li>检查更新</li>
+			<li>版本信息</li>
+			<li>关于</li>
+		</ul>
+	</div>
+</div>
+
+<!-- 导航 -->
+<div id="navigation">
+	<ul>
+		<li title="新建(Ctrl+N)">新建</li>
+		<li title="打开(Ctrl+O)">打开</li>
+		<li title="保存(Ctrl+S)">保存</li>
+		<span>|</span>
+		<li title="查找(Ctrl+F)">查找</li>
+		<li title="替换(Ctrl+H)">替换</li>
+		<span>|</span>
+		<li title="设置(F9)">设置</li>
+		<li title="文本导入">文本导入</li>
+		<span>|</span>
+		<li title="设置(F8)">素材库</li>
+		<span>|</span>
+		<li title="测试(F12)">测试</li>
+		<li title="分段测试(F10)">分段测试</li>
+		<li title="发布(F5)">发布</li>
+		<span>|</span>
+		<li title="高级UI">高级UI</li>
+		<li title="悬浮组件">悬浮组件</li>
+	</ul>
+</div>
+
+<!-- 编辑框 -->
+<div id="main">
+	<div id="left">
+		<div id="toolsbox">
+			<button>头像</button>
+			<button>心情</button>
+			<button>其他</button><br>
+			<button>音效</button>
+			<button>语音</button>
+			<button>按钮</button><br>
+			<button class="active">背景</button>
+			<button>立绘</button>
+			<button>音乐</button>
+		</div>
+		<div>
+			<audio id="material_audio" preload="none" src=""></audio>
+			<ul id="material" data-type="Graphics/Background"></ul>
+		</div>
+		<div>
+			<ul id="works"></ul>
+		</div>
+	</div>
+
+	<div id="preview">
+		<div id="item-preview">
+			<div class="preview-ties">*可拖拽到屏幕上</div>
+			<img src="" alt="">
+			<div id="pic-name"></div>
+		</div>
+		<span class="leftScale" data-show="true">
+			<span class="triangle-hide"></span>
+			</span>
+		<span class="bottomScale" data-show="true">
+			<span class="triangle-hide"></span>
+		</span>
+		<div id="control">
+			<div id="controlBG"></div>
+			<div class="itemImg"></div>
+			<!--<div class="buttonImg"></div>-->
+			<div class="speaker"></div>
+			<div class="dialog">双击此处设置对话</div>
+			<div class="dialog-btns">
+				<button class="dialog-hide"><img src="img/Eye_close_font_awesome.svg" height=18></button>
+				<button class="dialog-show"><img src="img/Eye_open_font_awesome.svg" height=18></button>
+			</div>
+			<span class="delect"></span>
+		</div>
+		<div id="selbox">
+			<ul>
+				<li class="active">消息</li>
+				<li>逻辑</li>
+				<li>效果</li>
+				<li>图像</li>
+				<li>音乐</li>
+			</ul>
+			<div>
+				<button>显示文本</button>
+				<button>消失对话框</button>
+				<button>悬浮组件开关</button><br>
+				<button>文本选项</button>
+				<button>注释</button>
+				<button>气泡模式</button><br>
+				<button>图片选项</button>
+				<button>自动播放剧情</button>
+				<button>发射气泡</button>
+			</div>
+			<div>
+				<button>条件分歧</button>
+				<button>数值操作</button>
+				<button>跳转剧情</button><br>
+				<button>循环</button>
+				<button>二周目数值</button>
+				<button>呼叫子剧情</button><br>
+				<button>中断循环</button>
+				<button>字符串</button>
+				<button>呼叫界面</button><br>
+				<button>体力锁</button>
+				<button>强制存档/读档</button>
+				<button>返回标题画面</button>
+				<button>剧情锁</button>
+			</div>
+			<div>
+				<button>等待</button>
+				<button>插入至BGM鉴赏</button><br>
+				<button>天气设置</button>
+				<button>插入至CG鉴赏</button><br>
+				<button>画面闪烁</button><br>
+				<button>画面震动</button>
+			</div>
+			<div>
+				<button>显示远景图</button>
+				<button>移动图片</button>
+				<button>显示动画图片</button><br>
+				<button>显示背景图</button>
+				<button>图片消除</button><br>
+				<button>显示前景图</button>
+				<button>图片旋转</button><br>
+				<button>显示立绘</button>
+				<button>资源预加载</button>
+			</div>
+			<div>
+				<button>播放背景音乐</button>
+				<button>淡出背景音乐</button><br>
+				<button>播放音效</button>
+				<button>停止音效</button><br>
+				<button>播放循环音效</button>
+				<button>淡出循环音效</button><br>
+				<button>播放语音</button>
+				<button>停止语音</button>
+			</div>
+		</div>
+	</div>
+	<div id="resizor" title="左右拖动"></div>
+	<div id="list">
+		<ul></ul>
+	</div>
+</div>
+<div id="debug" style="display:none"></div>
+<script src="js/Vfunc.js"></script>
+<script src="js/drag.js"></script>
+<script src="js/key.js"></script>
+<script src="js/plugin.js"></script>
+<script src="js/script.js"></script>
+<script src="js/action.js"></script>
+</body>
+</html>

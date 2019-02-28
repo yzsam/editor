@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新建</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        .input{
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .container {
+            padding: 15px 20px;
+            overflow: hidden;
+        }
+        .container>div{
+            margin-bottom: 10px;
+        }
+        .container>div:last-child {
+            margin-bottom: 0;
+        }
+        .proj-name,.proj-resolution,.proj-path{font-size: 0}
+        .proj-name label,.proj-resolution label,.proj-path label{
+            display: inline-block;
+            width: 70px;
+            height: 25px;
+            margin-right: 10px;
+            line-height: 25px;
+            text-align: right;
+            font-size: 12px
+        }
+        .proj-name input {
+            width: 380px;
+        }
+        .proj-resolution select{
+            width: 160px;
+        }
+        .proj-resolution span {
+            margin-left: 10px;
+            font-size: 12px;
+            color: #008000;
+        }
+        .proj-path input {
+            width: 300px;
+            margin-right: 5px;
+        }
+        button {
+            width: 70px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+        button.confirm {
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+        .other,.footer {
+            margin-left: 80px;
+            font-size: 0;
+        }
+        .other label {font-size: 12px}
+        .other input{
+            margin: 0 5px 0 0;
+            vertical-align: text-bottom;
+        }
+        .skin {
+            display: inline;
+            margin: 0 8px 0 15px;
+        }
+        .skin select{
+            width: 135px;
+            margin-left: 10px;
+        }
+        .ties {
+            font-size: 12px;
+            color: red;
+        }
+        .btn-group {
+            display: inline-block;
+            margin-left: 54px;
+        }
+        .btn-group button:first-child {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="proj-name">
+            <label>工程名:</label>
+            <input class="input" type="text">
+        </div>
+
+        <div class="proj-resolution">
+            <label>工程分辨率:</label>
+            <select class="input" name="" id="resolution">
+                <option class="input" value="">16:9 960 * 540(推荐)</option>
+            </select>
+            <span>资源最全、最完美的分辨率</span>
+        </div>
+
+        <div class="proj-path">
+            <label>工程路径:</label>
+            <input class="input" type="text" disabled readonly>
+            <button>浏览</button>
+        </div>
+
+        <div class="other">
+            <label for="default-input">
+                <input type="checkbox" name="" id="default-input">导入默认素材
+            </label>
+            <div class="skin">
+                <label>默认皮肤</label>
+                <select class="input" name="" id="">
+                    <option class="input" value="">斜阳暮</option>
+                </select>
+            </div>
+            <button>预览</button>
+        </div>
+
+        <div class="footer">
+            <span class="ties">更多素材可去素材库下载哦(≡ω≡)</span>
+            <span class="btn-group">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+        </div>
+    </div>
+    <script>
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:'+index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    </script>
+</body>
+</html>

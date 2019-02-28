@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录</title>
+<script src="../script/jquery/2.1.4/jquery.min.js"></script>
+<script src="../script/jquery/jquery.cookie.js"></script>
+<script src="player/libs/md5.js"></script>
+<style>
+	button{text-align: center;}
+</style>
+</head>
+
+<body>
+<fieldset>
+	<legend>登录:</legend>
+	用户名: <input type="text" id="userid" placeholder="用户名/E-mail" /><br />
+	密　码: <input type="password" id="passwd" placeholder="密码" /><br />
+	<button>登录</button>
+	<u>创建账号</u>
+</fieldset>
+<fieldset>
+	<legend>创建账号:</legend>
+	用户名: <input type="text" id="newuser" placeholder="用户名" /><br />
+	E-mail: <input type="text" id="email" placeholder="E-mail" /><br />
+	密　码: <input type="password" id="newpw" placeholder="密码" /><br />
+	密　码: <input type="password" id="newpw2" placeholder="重复密码" /><br />
+	<button>创建账号</button>
+	<u>已有账号</u>
+</fieldset>
+<script>
+$("button").click(function(){
+  let d={};
+  d['type']='login';
+  $("input").each(function(){
+    if($(this).is(":visible")==true)d[$(this).attr("id")]=$(this).is(":password")?md5($(this).val()):$(this).val()
+  });
+	$.ajax({
+		data:d,//{type:'login',userid:$("#userid").val(),passwd:$("#passwd").val()}
+		success:function(callback) {
+			if(1000==callback.code||1002==callback.code){
+				parent.uuid=callback.uuid;
+				var index = parent.layer.getFrameIndex(window.name);
+				parent.layer.close(index);
+			}
+			if(callback.msg)alert(callback.msg)
+		}
+	})
+});
+$("fieldset").eq(1).hide();
+$("u").click(function(){
+  var i = $("u").index(this);
+  $("fieldset").eq(i).hide();
+  $("fieldset").eq(i==0?1:0).show()
+});
+</script>
+</body>
+</html>

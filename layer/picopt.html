@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图片选项</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            font-size: 12px;
+        }
+        ul,ol,li {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            list-style: none;
+        }
+        button {font-size: 10px}
+        .ta-r{text-align: right}
+        .clearfix{content:'';clear: both;overflow: hidden;width: 0;height: 0;}
+        .f-l {
+            float: left;
+        }
+        .f-r {
+            float: right;
+        }
+        .picopt {
+            padding: 10px;
+        }
+        .input {
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .input-100 {
+            width: 100px;
+            text-align: right;
+        }
+        .input-175 {
+            width: 175px;
+        }
+        .option-setting {
+            margin-top: 10px;
+        }
+        .option-content {
+            width: 350px;
+            height: 185px;
+            padding: 5px;
+            border: solid 1px #dedee0;
+        }
+        .option-list {
+            width: 175px;
+            height: 115px;
+            border: solid 1px #dedee0;
+        }
+        .option-list li {
+            height: 25px;
+            line-height: 25px;
+        }
+        .option-operation button {
+            width: 150px;
+            height: 20px;
+            margin-top: 10px;
+            background: white;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+        }
+        .pic-location {
+            position: relative;
+            width: 150px;
+            height: 75px;
+            padding: 10px 0 0 14px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .pic-location div {
+            margin-bottom: 5px;
+        }
+        .pic-location input{
+            margin-left: 10px;
+        }
+        .pic-location span{
+            position: absolute;
+            top: -10px;
+            left: 6px;
+        }
+        .pic-edit {
+            margin-top: 10px;
+        }
+        .btn-group {
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .btn-group button {
+            width: 75px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .btn-group button.confirm {
+            margin-right: 5px;
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="picopt">
+        <div class="option-content">
+            <div>选择项：</div>
+            <div class="option-setting">
+                <div class="f-l option-list">
+                    <ul>
+                        <li>此处添加新项</li>
+                    </ul>
+                </div>
+                <div class="f-r option-operation">
+                    <div class="pic-location">
+                        <span>选项坐标</span>
+                        <div>X: <input class="input input-100" type="number" value="0"></div>
+                        <div>Y: <input class="input input-100" type="number" value="0"></div>
+                    </div>
+                    <button>移除当前图片选项</button>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="pic-edit">
+                <input class="input input-175" type="text" readonly>
+                <span><-编辑图片按钮</span>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="confirm">确定</button>
+            <button class="layer-close">取消</button>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var i = $.getUrlParam("id");
+            if(i){
+                var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+                var listArr = [];
+                console.log(data.Argv)
+                for(let a=0;a<data.Argv.length;a++) {
+                    console.log(data.Argv[a].split(',')[0])
+                    listArr.push(parent.PData.data.Main.DStory[parent.dramatype]._events[data.Argv[a].split(',')[0]])
+                }
+                console.log(listArr)
+            }
+            //关闭弹窗
+            $('.layer-close').eq(0).click(function () {
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                console.log('关闭:'+index);
+                parent.layer.close(index);
+                layer.close()
+            })
+        })
+    </script>
+</body>
+</html>

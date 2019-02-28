@@ -1,0 +1,293 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>音乐选择-BGM</title>
+	<!-- jquery ui -->
+	<link rel="stylesheet" type="text/css" href="../js/JQuerySlider/css/jqueryui.min.css">
+	<!-- slider -->
+	<link rel="stylesheet" href="../js/JQuerySlider/css/jquery-ui-slider-pips.min.css" />
+	<script src="../script/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+			width: 100%;
+			height: 100%;
+			background: #f0f0f0;
+			font-size: 12px;
+		}
+		ul,ol,li{list-style: none;margin: 0;padding: 0}
+		.container {
+			padding: 15px;
+			overflow: hidden;
+		}
+		.f-l{float: left;}
+		.f-r{float: right;}
+		.ps-r {position: relative}
+		.title{
+			position: relative;
+			top: -10px;
+			left: 6px;
+		}
+		.title-border {
+			color: #434343;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+			box-sizing: border-box;
+		}
+		.content{overflow: hidden}
+		.search input{
+			width: 215px;
+			height: 25px;
+			padding-left: 5px;
+			box-sizing: border-box;
+			border: solid 1px #dedee0;
+		}
+		.search button{
+			position: absolute;
+			top: 4px;
+			right: 3px;
+			width: 16px;
+			height: 16px;
+			border: none;
+			background-color: white;
+			background-image: url("../img/icon-search.png");
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+			outline: none;
+		}
+		.list {
+			width: 215px;
+			height: 265px;
+			margin-top: 10px;
+			border: solid 1px #dedee0;
+			box-sizing: border-box;
+			overflow-y: scroll;
+		}
+		.list li{
+			height: 30px;
+			line-height: 30px;
+			padding-left: 45px;
+			box-sizing: border-box;
+			cursor: pointer;
+			overflow: hidden;
+		}
+		.list li.active{
+			color: white;
+			background: #ffac28;
+		}
+		.bgm-btn button {
+			display: block;
+			width: 70px;
+			height: 25px;
+			margin-bottom: 5px;
+			font-size: 12px;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+			box-sizing: border-box;
+			background: white;
+		}
+		.voice {
+			width: 70px;
+			height: 180px;
+			margin-top: 20px;
+			border: solid 1px #dedee0;
+			border-radius: 5px;
+			background: url("../img/voice-bg.png") no-repeat;
+			background-size: 100% 100%;
+		}
+		.voice-control{
+			position: absolute;
+			top: 10px;
+			left: 0;
+			padding-left: 10px;
+		}
+		.btn-group {
+			margin-top: 4px;
+			overflow: hidden;
+		}
+		.btn-group button{
+			width: 75px;
+			height: 30px;
+			font-size: 12px;
+			border: solid 1px #dedee0;
+			border-radius: 3px;
+			background: white;
+			box-sizing: border-box;
+		}
+		.btn-group span button{
+			margin-left: 10px;
+		}
+		.btn-group button.confirm{
+			color: white;
+			border: solid 1px #ffac28;
+			background: #ffac28;
+		}
+		.btn-group button.opendir{
+			width: 110px;
+			height: 30px;
+		}
+
+		/*slider*/
+		span.ui-state-default.ui-slider-handle.ui-corner-all{
+			width: 20px;
+			height: 10px;
+			left: -8px;
+			background: white;
+			border-top-right-radius: 50%;
+			border-bottom-right-radius: 50%;
+			transform: translateY(-35%);
+		}
+		div.ui-slider-vertical {
+			width: 3px;
+			height: 160px;
+			border-left: solid 1px #999;
+			background: #dedee0;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+
+<body>
+<div class="container">
+	<div class="content">
+		<div class="f-l">
+			<div class="search ps-r">
+				<input type="text" placeholder="查找">
+				<button></button>
+			</div>
+			<ul class="list">
+				<li class="active">(无)</li>
+			</ul>
+		</div>
+		<div class="f-r">
+			<audio id="audio" src=""></audio>
+			<div class="bgm-btn">
+				<button class="bgm-play">播放</button>
+				<button class="bgm-stop">停止</button>
+			</div>
+			<div class="voice ps-r title-border">
+				<span class="title">音量</span>
+				<div class="voice-control">
+					<div class="slider"></div>
+					<input type="hidden" id="voiceStrength" value="1" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="btn-group">
+		<button class="opendir">打开所在文件夹</button>
+		<span class="f-r">
+			<button class="confirm">确认</button>
+			<button class="layer-close">取消</button>
+		</span>
+	</div>
+</div>
+<script src="../js/JQuerySlider/js/jquery-plus-ui.min.js"></script>
+<script src="../js/JQuerySlider/js/jquery-ui-slider-pips.js"></script>
+<script>
+	$(function () {
+/* to:jie */
+		var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+		var material = parent.PData.material;
+		var l = 'audio/bgm';
+		var songArr =[];
+		$(".list").empty();
+		for(var i in material) {
+			if ( material[i][0].indexOf(l) !== 0 ) continue;
+            songArr.push(material[i][0].split('/')[2].split('.')[0])
+			var li=$('<li data-path="'+material[i][0].split('/')[2]+'">' + material[i][0].split('/')[2].split('.')[0] + '</li>');
+			$(".list").append(li);
+		}
+/* to:jie */
+		/*$.getUrlParam("id")报错，故从自定义jq组件拆出来*/
+		var state;
+		var reg = new RegExp("(^|&)id=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) {
+			state = unescape(r[2])
+		}else{
+			state = null
+		}/*end*/
+		if(state){
+			var i = state;
+			var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+			if(data.Argv[2]){
+                var song_index = data.Argv[2].split('.')[0]; /*歌曲索引*/
+				$('.list li').each(function (i) {
+                    $('.list li').eq(i).removeClass('active');
+                    if($('.list li').eq(i).html() == song_index){
+                        $('.list li').eq(i).addClass('active')
+					}
+                })
+                $('#audio').attr('src',parent.realurl(song_index+'.mp3','audio\/bgm'))
+				console.log($('#audio'))
+				$('#audio')[0].volume = data.Argv[1]/100;
+			}
+			$(".slider").slider({value:data.Argv[1]})
+			$("#voiceStrength").val(data.Argv[1]);
+
+		}
+        //确定
+        $('.confirm').eq(0).click(function () {
+            /*数据修改*/
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0] = 'BGM\\\\'+$('.list li.active').attr('data-path');
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[1] = $("#voiceStrength").val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[2] = $('.list li.active').attr('data-path');
+            /*列表刷新*/
+            parent.Vlist();
+            /*弹出框关闭*/
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            layer.close()
+        })
+		//关闭弹窗
+		$('.layer-close').eq(0).click(function () {
+			var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+			console.log('关闭:'+index);
+			parent.layer.close(index);
+            parent.layer.close()
+		});
+
+		$('.bgm-play').click(function () {
+			$('#audio')[0].play();
+        })
+        $('.bgm-stop').click(function () {
+            $('#audio')[0].pause();
+        })
+		$('.list li').each(function () {
+			$(this).click(function () {
+                $('.list li.active').removeClass('active');
+                $(this).addClass('active')
+                $('#audio').attr({'src':parent.realurl($(this).attr('data-path'),'audio\/bgm')})
+            })
+        })
+		//slider
+		$(".slider")
+			.slider({
+				min: 0,
+				max: 100,
+				orientation: "vertical" //方向
+			})
+			.slider("pips", {
+				rest: "label",
+				step: "50" //间隔
+			})
+			.on("slidechange", function(e, ui) { //浮标改变的回调
+				$("#voiceStrength").val(ui.value);
+				$('#audio')[0].volume = ui.value/100;
+			});
+		$("#voiceStrength")
+			.on('input', function() { //输入框输入值的回调
+                $('#audio')[0].volume = $(this).val()/100;
+				$(".slider").slider({
+					value: $(this).val()
+				})
+			});
+	})
+</script>
+</body>
+</html>

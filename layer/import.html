@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>批量导入文本-闪版</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        ul,ol,li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        ul {
+           overflow: hidden;
+        }
+        li{
+            float: left;
+            padding: 5px 0;
+            border-bottom: solid 2px transparent;
+        }
+        li:first-child {
+            margin: 0 40px 0 15px;
+        }
+        li.active{
+            color: #ffac28;
+            border-bottom: solid 2px #ffac28;
+        }
+        .f-l {
+            float: left
+        }
+
+        .f-r {
+            float: right
+        }
+        .input{
+            display: inline-block;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .input-55{
+            width: 55px;
+            text-align: right;
+        }
+        .container {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .tab-box {
+            margin-bottom: 5px;
+        }
+        .import-item {display: none}
+        .import-text textarea{
+            width: 875px;
+            height: 340px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .preview {
+            width: 659px;
+            height: 130px;
+            margin-top: 3px;
+            border: solid 1px #dedee0;
+            box-sizing: border-box;
+            background-image: url("../img/e.jpg");
+        }
+        .setting {
+            width: 875px;
+            margin-top: 15px;
+            border-top: solid 1px #dedee0;
+            border-bottom: solid 1px #dedee0;
+            overflow: hidden;
+        }
+        .setNamespot {
+            width: 175px;
+            padding: 10px;
+        }
+        .setCount {
+            width: 680px;
+            padding: 10px 0 10px 20px;
+            border-left: solid 1px #dedee0;
+            box-sizing: border-box;
+        }
+        .setCount .title{
+            margin-bottom: 5px;
+        }
+        .setCount label{
+            margin-right: 50px;
+        }
+        .import-bubble textarea {
+            width: 875px;
+            height: 550px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .btn {
+            margin-top: 20px;
+        }
+        .btn button {
+            width: 120px;
+            height: 30px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <ul class="tab-box">
+        <li class="active">导入文本</li>
+        <li>导入气泡</li>
+    </ul>
+    <div>请将文字粘贴(输入)至文本框中，调整行数和列数，完成后开始文本分析。</div>
+    <div class="import-content">
+        <div class="import-item import-text">
+            <textarea name=""></textarea>
+            <div class="setting">
+                <div class="setNamespot f-l">
+                    <div class="title">设置姓名识别</div>
+                    <div>
+                        <input type="checkbox">
+                        <label>【姓名】+ 换行</label>
+                    </div>
+                    <dl class="exp">
+                        <dt>例如：</dt>
+                        <dd>【柳丁】</dd>
+                        <dd>今天天气不错</dd>
+                    </dl>
+                </div>
+                <div class="setCount f-l">
+                    <div class="title">设置行数和列数</div>
+                    <div>
+                        <label>每页
+                            <input class="input input-55" type="number">行
+                        </label>
+                        <label>每
+                            <input class="input input-55" type="number">字换行
+                        </label>
+                    </div>
+                    <div class="preview">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="import-item import-bubble">
+            <textarea name=""></textarea>
+        </div>
+    </div>
+    <div class="btn">
+        <button>打开</button>
+        <div class="btn-group f-r">
+            <button class="confirm">文本分析</button>
+            <button class="layer-close">关闭</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(".import-item").first().show();
+    $(".tab-box li").each(function (i) {
+        $(this).click(function () {
+            $(".tab-box li").removeClass('active').eq(i).addClass('active');
+            $(".import-item").hide().eq(i).show();
+        });
+    });
+    //关闭弹窗
+    $('.layer-close').eq(0).click(function () {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        console.log('关闭:'+index);
+        parent.layer.close(index);
+        layer.close()
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>显示立绘</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            overflow-x: hidden;
+            font-size: 12px;
+        }
+
+        .mb-5 {
+            margin-bottom: 5px
+        }
+
+        .f-l {
+            float: left;
+        }
+
+        .f-r {
+            float: right;
+        }
+
+        .ta-r {
+            text-align: right
+        }
+
+        .ps-r {
+            position: relative
+        }
+
+        .hidden {
+            overflow: hidden
+        }
+
+        .clearfix {
+            content: '';
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            clear: both;
+        }
+
+        .title {
+            position: absolute;
+            left: 6px;
+            top: -10px;
+        }
+
+        .container {
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .title-border {
+            color: #434343;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .preview {
+            width: 640px;
+            padding: 10px 0;
+        }
+
+        .preview-content {
+            position: relative;
+            width: 620px;
+            height: 350px;
+            margin: 0 auto;
+            background-image: url("../img/e.jpg");
+            overflow: hidden;
+        }
+
+        .mask,.contentImg {
+            position: absolute;
+            width: 465px;
+            height: 262px;
+            top: 45px;
+            left: 80px;
+            box-shadow: rgba(0, 0, 0, .6) 0 0 0 1366px;
+            z-index: 50;
+        }
+        .contentImg {
+            z-index: 40;
+            box-shadow: none;
+        }
+        .contentImg img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 350px;
+        }
+
+        .picsetting {
+            width: 350px;
+        }
+
+        .size > label, .showLocateion label {
+            display: block;
+        }
+
+        .input-110 {
+            display: inline-block;
+            width: 110px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input-80 {
+            display: inline-block;
+            width: 80px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .input-60 {
+            display: inline-block;
+            width: 60px;
+            height: 25px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .showLocateion, .other {
+            margin-top: 10px;
+        }
+
+        .showLocateion {
+            padding: 10px 10px 25px;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-group button {
+            width: 75px;
+            height: 30px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .btn-group button.confirm {
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+
+        .shape {
+            padding: 10px 5px;
+        }
+
+        .shape > div {
+            margin-bottom: 5px;
+        }
+
+        .shapeNum {
+            margin-top: 25px;
+        }
+
+        .size {
+            padding: 5px 15px;
+        }
+
+        .size input {
+            margin-left: 10px
+        }
+
+        .opacity {
+            padding: 5px;
+        }
+
+        .btn-opacity {
+            margin-bottom: 5px
+        }
+
+        .btn-opacity button {
+            width: 55px;
+            height: 20px;
+            margin-right: 5px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            font-size: 10px;
+        }
+
+        .btn-opacity button:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="f-l ps-r title-border">
+        <span class="title">预览</span>
+        <div class="preview">
+            <div class="preview-content">
+                <div class="contentImg"></div>
+                <div class="mask"></div>
+            </div>
+        </div>
+    </div>
+    <div class="picsetting f-r">
+        <div>
+				<span class="f-l shapeNum">
+					<label>编号：</label>
+					<input class="input-60" type="number">
+				</span>
+            <div class="shape f-r title-border ps-r">
+                <span class="title">图片图形</span>
+                <div class="hidden">
+                    <label for="local"><input type="radio" name="imageShape" id="local">使用指定图片</label>
+                    <input class="input-110 f-r" type="text" readonly>
+                </div>
+                <div class="hidden">
+                    <label for="stringlocal"><input type="radio" name="imageShape" id="stringlocal">字符串指定图片</label>
+                    <input class="input-110 f-r" type="text" readonly>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="showLocateion title-border ps-r">
+            <span class="title">显示位置</span>
+            <div id="showLct">
+                <span class="f-l">
+                    <label for="directlocal"><input type="radio" name="locationRadio" id="directlocal">直接指定</label>
+                    <label class="mb-5">X: <input class="input-110 ta-r" type="number" name="directX"></label>
+                    <label>Y: <input class="input-110 ta-r" type="number" name="directY"></label>
+                </span>
+                <span class="f-r">
+                    <label for="valuelocal"><input type="radio" name="locationRadio" id="valuelocal">使用数值指定</label>
+                    <label class="mb-5">X: <input class="input-110" type="text" readonly disabled></label>
+                    <label>Y: <input class="input-110" type="text" readonly disabled></label>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="other">
+				<span class="size f-l title-border ps-r">
+					<span class="title">缩放率</span>
+					<label class="mb-5">X: <input class="input-80 ta-r" type="number" name="scale-x"></label>
+					<label>Y: <input class="input-80 ta-r" type="number" name="scale-y"></label>
+					<span>锚点 <label for="reset"><input type="radio" id="reset">复位</label></span>
+				</span>
+            <span class="opacity f-r title-border ps-r">
+					<span class="title">其他</span>
+					<div class="mb-5 hidden">
+						<label>不透明度:</label>
+						<input class="f-r input-110 ta-r" type="number" name="opacity" max="255" min="0">
+					</div>
+					<div class="btn-opacity">
+						<button value="0">透明</button>
+						<button value="125">半透明</button>
+						<button value="255">不透明</button>
+					</div>
+					<span>图片放置：<label for="image"><input type="checkbox" id="image">镜像</label></span>
+				</span>
+            <div class="clearfix"></div>
+        </div>
+        <div class="btn-group">
+            <button class="confirm">确定</button>
+            <button class="layer-close">取消</button>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var pArr = [], gArr = [], i = $.getUrlParam("id");
+        if (i) {
+            var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+            var m = parent.materialtype.toLowerCase().split('/')[1];
+            var n = parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[1].toLowerCase();
+            var material = parent.PData.material;
+            n = n.replace(/\\/g, '/'); //将\替换成/
+            console.log(n)
+            for (var j in material) {
+                var p = material[j][0], g = material[j][2];
+                pArr.push(p) //把遍历的p数据整理成数组pArr
+                gArr.push(g) //把遍历的g数据整理成数组gArr
+                let imgUrl = gArr[pArr.indexOf('graphics/' + n)]; //先找到n所在的数组的下标，然后在gArr找到下标相对应的字符编码
+                if (imgUrl) { //判断遍历时，该字段是否存在
+                    var parentUrl = imgUrl.substring(0, 2) //截取字符编码前两位作为格式的父级
+                    $(".contentImg").html('<img src="' + parent.pichost + parentUrl + '/' + imgUrl + '">');
+                }
+            }
+            $('.shapeNum input').val(data.Argv[0])
+            $('input[name="locationRadio"]')[data.Argv[2]].checked = true
+            $('input[name="directX"]').val(data.Argv[3])
+            $('input[name="directY"]').val(data.Argv[4])
+            $('.contentImg img').css({'opacity':data.Argv[7]/255,'top':data.Argv[4]*0.5,'left':data.Argv[3]*0.5})
+            $('.opacity input[name="opacity"]').val(data.Argv[7])
+            $('.size input[ name="scale-x"]').val(data.Argv[5])
+            $('.size input[ name="scale-y"]').val(data.Argv[6])
+        }
+
+        $('.btn-opacity button').each(function () {
+            $(this).click(function () {
+                $('.opacity input[name="opacity"]').val($(this).attr('value'))
+                $('.contentImg img').css('opacity', $(this).attr('value') / 255)
+            })
+        })
+
+        $('input[name="locationRadio"]').each(function () {
+            $(this).click(function () {
+                $('#showLct input[type="number"],#showLct input[type="text"]').attr('disabled', 'disabled')
+                $(this).parent('label').nextAll('label').children('input').removeAttr('disabled')
+            })
+        })
+        //确定
+        $('.confirm').eq(0).click(function () {
+            /*数据修改*/
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[0] = $('.shapeNum input').val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[3] = $('.directlocal .X').val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[4] = $('.directlocal .Y').val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[5] = $('.size input[ name="scale-x"]').val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[6] = $('.size input[ name="scale-y"]').val();
+            parent.PData.data.Main.DStory[parent.dramatype]._events[i].Argv[7] = $('.opacity input[name="opacity"]').val();
+            /*列表刷新*/
+            parent.Vlist();
+            /*弹出框关闭*/
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            // layer.close()
+        })
+        //取消 关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:' + index);
+            parent.layer.close(index);
+            // layer.close()
+        });
+    })
+</script>
+</body>
+</html>

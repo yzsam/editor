@@ -1,0 +1,456 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>条件分歧</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            font-size: 12px;
+        }
+
+        ul, ol, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .mb-15{
+            margin-bottom: 15px;
+        }
+        .f-l{
+            float: left;
+        }
+        .f-r{
+            float: right;
+        }
+        .ta-r{text-align: right}
+        .table {display: table}
+        .tb-row {display: table-row}
+        .tb-cell {display: table-cell}
+        .input {
+            display: inline-block;
+            height: 25px;
+            padding-left: 5px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .input-65 {
+            width: 65px;
+        }
+        .input-85 {
+            width: 85px;
+            text-align: right;
+        }
+        .input-145 {
+            width: 145px;
+        }
+        .disagreement{
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        .tab-box ul{
+            background: white;
+            overflow: hidden;
+        }
+        .tab-box ul li {
+            float: left;
+            padding: 5px 15px;
+        }
+        .tab-box ul li.active {
+            color: #ffac28;
+            font-weight: bold;
+            border-bottom: solid 2px #ffac28;
+            box-sizing: border-box;
+        }
+        .tab-item{
+            display: none;
+            width: 100%;
+            height: 250px;
+            padding: 15px 25px;
+            box-sizing: border-box;
+        }
+        .footer{
+            background: white;
+            padding-bottom: 15px;
+        }
+        .footer button{
+            width: 75px;
+            height: 25px;
+            margin: 0 10px;
+            border: solid 1px #dedee0;
+            border-radius: 3px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .footer button.confirm{
+            color: white;
+            background: #ffac28;
+        }
+        #condition{
+            vertical-align: middle;
+        }
+        .chkBox {
+            padding: 10px 0 15px;
+        }
+        .btn-group {
+            text-align: right;
+        }
+        .value {
+            position: relative;
+            padding: 25px 110px 25px 25px;
+            margin-top: 15px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+        .value div{
+            margin-bottom: 10px;
+        }
+        .value div:last-child {
+            margin-bottom: 0;
+        }
+        .value span{
+            position: absolute;
+            left: 6px;
+            top: -10px;
+        }
+        .link {
+            margin-top: 15px;
+        }
+        .link a{
+            color: blue;
+            text-decoration: none;
+        }
+        .local-area .table {
+            width: 385px;
+            margin: 10px 0;
+            padding: 5px 15px;
+            border: solid 1px #dedee0;
+            box-sizing: border-box;
+        }
+        .local-area .table input {
+            display: inline-block;
+            width: 80px;
+            height: 25px;
+            box-sizing: border-box;
+        }
+        .local-area .table label {
+            display: inline-block;
+            width: 40px;
+            line-height: 25px;
+        }
+        .local-area .table .tb-row:first-child label {
+            margin-bottom: 10px;
+        }
+        .judge-state {
+            position: relative;
+            margin-top: 20px;
+            padding: 10px 0 10px 10px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+        }
+        .judge-state label {
+            margin-right: 70px;
+        }
+        .judge-state div {
+            position: absolute;
+            left: 6px;
+            top: -10px;
+        }
+        .num-area div{
+            margin-top: 10px;
+        }
+        .goods-lock div{
+            display: flex;
+            margin-bottom: 45px;
+        }
+        .goods-lock label{
+            flex: 1;
+            width: 140px;
+            text-align: center;
+        }
+        .goods-lock span{
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 0 10px 0 5px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="disagreement">
+    <div class="tab-box">
+        <ul>
+            <li class="active">数值</li>
+            <li>鲜花</li>
+            <li>二周目数值</li>
+            <li>鼠标/触摸</li>
+            <li>平台</li>
+            <li>商品锁</li>
+        </ul>
+        <div class="tab-item">
+            <div class="mb-15">
+                <label>数值：</label>
+                <input class="input input-145" type="text" name="valNum">
+            </div>
+            <div class="mb-15">
+                <label>关系：</label>
+                <select class="input input-145" name="valueSelect">
+                    <option value="0">= 等于</option>
+                    <option value="1">≥ 大于等于</option>
+                    <option value="2">≤ 小于等于</option>
+                    <option value="3">＞ 大于</option>
+                    <option value="4">＜ 小于</option>
+                    <option value="5">≠ 不等于</option>
+                </select>
+            </div>
+            <div class="value">
+                <span>值</span>
+                <div>
+                    <label for=""><input type="radio" name="valueRadio">固定数值</label>
+                    <input class="input input-145 ta-r f-r" type="number" name="vallcNum">
+                </div>
+                <div>
+                    <label for=""><input type="radio" name="valueRadio">其他数值</label>
+                    <input class="input input-145 f-r" type="text" readonly disabled>
+                </div>
+                <div>
+                    <label for=""><input type="radio" name="valueRadio">二周目数值</label>
+                    <input class="input input-145 f-r" type="text" readonly disabled>
+                </div>
+            </div>
+        </div>
+        <div class="tab-item">
+            <div>
+                <label>送花数：</label>
+                <select class="input input-145" name="" id="flNum">
+                    <option value="">≥ 大于等于</option>
+                    <option value="">＜ 小于</option>
+                </select>
+            </div>
+            <div class="value">
+                <span>值</span>
+                <div>
+                    <label for=""><input name="val" name="FlRadio" type="radio">固定数值</label>
+                    <input class="input input-145 ta-r f-r" type="number" name="FLlcVal">
+                </div>
+                <div>
+                    <label for=""><input name="val" name="FlRadio" type="radio">其他数值</label>
+                    <input class="input input-145 f-r" type="text" name="otherVal" readonly disabled>
+                </div>
+                <div>
+                    <label for=""><input name="val" name="FlRadio" type="radio">二周目数值</label>
+                    <input class="input input-145 f-r" type="text" name="ExVal" readonly disabled>
+                </div>
+            </div>
+            <div class="link ta-r">
+                <a href="">【作品定价指南】</a>
+                <a href="">【鲜花使用教程】</a>
+            </div>
+        </div>
+        <div class="tab-item">
+            <div class="mb-15">
+                <label>数值：</label>
+                <input class="input input-145" type="text" name="ExVal">
+            </div>
+            <div class="mb-15">
+                <label>关系：</label>
+                <select class="input input-145" name="ExSelect">
+                    <option value="0">= 等于</option>
+                    <option value="1">≥ 大于等于</option>
+                    <option value="2">≤ 小于等于</option>
+                    <option value="3">＞ 大于</option>
+                    <option value="4">＜ 小于</option>
+                    <option value="5">≠ 不等于</option>
+                </select>
+            </div>
+            <div class="value">
+                <span>值</span>
+                <div>
+                    <label for=""><input name="ExRadio" type="radio">固定数值</label>
+                    <input class="input input-145 f-r ta-r" type="number" name="EXlcVal">
+                </div>
+                <div>
+                    <label for=""><input name="ExRadio" type="radio">其他数值</label>
+                    <input class="input input-145 f-r" type="text" readonly disabled>
+                </div>
+                <div>
+                    <label for=""><input name="ExRadio" type="radio">二周目数值</label>
+                    <input class="input input-145 f-r" type="text" readonly disabled>
+                </div>
+            </div>
+        </div>
+        <div class="tab-item">
+            <div class="local-area">
+                <label for=""><input type="radio" name="">在指定区域</label>
+                <div class="table">
+                    <div class="tb-row">
+                        <div class="tb-cell">
+                            <label>X坐标:</label>
+                            <input class="input input-85" type="number" value="0">
+                        </div>
+                        <div class="tb-cell">
+                            <label>Y坐标:</label>
+                            <input class="input input-85" type="number" value="0">
+                        </div>
+                    </div>
+                    <div class="tb-row">
+                        <div class="tb-cell">
+                            <label>宽度:</label>
+                            <input class="input input-85" type="number" min="1" value="1">
+                        </div>
+                        <div class="tb-cell">
+                            <label>高度:</label>
+                            <input class="input input-85" type="number" min="1" value="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="num-area">
+                <label for=""><input type="radio" name="">以图片编号确定区域(此判定高级UI无效)</label>
+                <div>
+                    <label>图片编号：</label>
+                    <input class="input input-85" type="number" min="1" value="1">
+                </div>
+            </div>
+            <div class="judge-state">
+                <div>判定状态</div>
+                <label for="mouse-after"><input type="radio" id="mouse-after">鼠标经过</label>
+                <label for="mouse-click"><input type="radio" id="mouse-click">鼠标按下/触摸点击</label>
+            </div>
+        </div>
+        <div class="tab-item">
+            <div>
+                <label>作品运行平台:</label>
+                <select class="input input-145" name="">
+                    <option value="">PC端</option>
+                    <option value="">安卓端</option>
+                </select>
+            </div>
+            <div style="margin-top: 40px">选择作品运行平台</div>
+        </div>
+        <div class="tab-item goods-lock">
+                <div>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>超大礼包
+                    </label>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>主线剧情
+                    </label>
+                </div>
+                <div>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>番外合集
+                    </label>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>属性优化
+                    </label>
+                </div>
+                <div>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>上帝视角
+                    </label>
+                    <label for="">
+                        <input type="radio" name="lockRadio"><span></span>快速通道
+                    </label>
+                </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="chkBox">
+            <label for="condition">
+                <input type="checkbox" id="condition">如果不符合上述条件，则触发其他剧情
+            </label>
+        </div>
+        <div class="btn-group">
+            <span class="seior-setting f-l">
+                <button>高级设置</button>
+            </span>
+            <span>
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var i = $.getUrlParam("id");
+        $(".tab-item").first().show();
+        if(i){
+            var data = parent.PData.data.Main.DStory[parent.dramatype]._events[i];
+            if(data.Argv[0].toString().substr(0,2)=='FL'){  /*鲜花数*/
+                $(".tab-box li").removeClass('active').eq(1).addClass('active');
+                $(".tab-item").hide().eq(1).show();
+                $(".tab-item").eq(1).find('input[name="FLlcVal"]').val(data.Argv[3])
+            }else if(data.Argv[0].toString().substr(0,2)=='EX'){  /*二周目数值*/
+                $(".tab-box li").removeClass('active').eq(2).addClass('active');
+                $(".tab-item").hide().eq(2).show();
+                $(".tab-item").eq(2).find('input[name="EXlcVal"]').val(data.Argv[3])
+                $('input[ name="ExRadio"]')[data.Argv[2]].checked = true
+                if(data.Argv[4] != 0){
+                    $('#condition').attr('checked','checked')
+                }else {
+                    $('#condition').removeAttr('checked')
+                }
+            }else if(data.Argv[5].substr(0,2) == '数值'){ /*数值操作*/
+                $(".tab-box li").removeClass('active').eq(0).addClass('active');
+                $(".tab-item").hide().eq(0).show();
+                $(".tab-item").eq(0).find('input[name="vallcNum"]').val(data.Argv[3])
+                $('input[ name="valNum"]').val(data.Argv[0])
+                $('select[name="valueSelect"]').val(data.Argv[1])
+                $('input[ name="valueRadio"]')[data.Argv[2]].checked = true
+                if(data.Argv[4] != 0){
+                    $('#condition').attr('checked','checked')
+                }else {
+                    $('#condition').removeAttr('checked')
+                }
+            }else if(data.Argv[0].toString().substr(0,2)=='ST'){ /*剧情锁*/
+                $(".tab-box li").removeClass('active').eq(5).addClass('active');
+                $(".tab-item").hide().eq(5).show();
+                $('input[name="lockRadio"]')[data.Argv[2]-1].checked = true
+            }
+        }
+        $(".tab-box li").each(function (i) {
+            $(this).click(function () {
+                $(".tab-box li").removeClass('active').eq(i).addClass('active');
+                $(".tab-item").hide().eq(i).show();
+            });
+        });
+        $('input[name="valueRadio"]').each(function () {
+            $(this).click(function () {
+                $(this).parent('.value').children('.input').attr('disabled', 'disabled')
+                $(this).parent('label').nextAll('input').removeAttr('disabled')
+            })
+        })
+        $('input[name="FlRadio"]').each(function () {
+            $(this).click(function () {
+                $(this).parent('.value').children('.input').attr('disabled', 'disabled')
+                $(this).parent('label').nextAll('input').removeAttr('disabled')
+            })
+        })
+        $('input[name="ExRadio"]').each(function () {
+            $(this).click(function () {
+                $(this).parent('.value').children('.input').attr('disabled', 'disabled')
+                $(this).parent('label').nextAll('input').removeAttr('disabled')
+            })
+        })
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:'+index);
+            parent.layer.close(index);
+        })
+    })
+
+</script>
+</body>
+</html>

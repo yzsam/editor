@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>资源预加载</title>
+    <script src="../script/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            overflow-x: hidden;
+            font-size: 12px;
+        }
+        .f-r {float: right}
+        .container {
+            padding: 15px;
+            overflow: hidden;
+        }
+        .list {
+            width: 360px;
+            height: 300px;
+            margin-top: 5px;
+            border: solid 1px #dedee0;
+        }
+        .btn-group {
+            margin-top: 20px;
+        }
+        .ties {
+            margin-left: 10px;
+            color: #666
+        }
+        p{
+            width: 340px;
+            margin-top: 5px;
+            padding: 0 5px;
+            color: #666
+        }
+        .btn-group {
+            overflow: hidden;
+        }
+        .btn-group span button:first-child{
+            margin-right: 15px;
+        }
+        .btn-group button{
+            width: 75px;
+            height: 30px;
+            font-size: 12px;
+            border: solid 1px #dedee0;
+            border-radius: 5px;
+            background: white;
+            box-sizing: border-box;
+        }
+        .btn-group button.confirm{
+            color: white;
+            border: solid 1px #ffac28;
+            background: #ffac28;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>预加载文件列表 <span class="ties">*此功能仅用于web端</span></div>
+        <div class="list"></div>
+        <p>可以在此处将后续的一部分素材预先加载出来，以便web端更流畅地运行。</p>
+        <div class="btn-group">
+            <span>
+                <button>添加</button>
+                <button>删除</button>
+            </span>
+            <span class="f-r">
+                <button class="confirm">确定</button>
+                <button class="layer-close">取消</button>
+            </span>
+        </div>
+    </div>
+    <script>
+        //关闭弹窗
+        $('.layer-close').eq(0).click(function () {
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            console.log('关闭:'+index);
+            parent.layer.close(index);
+            layer.close()
+        })
+    </script>
+</body>
+</html>
