@@ -8,6 +8,6 @@ H5 GAME 编辑器
 欢迎加入QQ群参与讨论
 QQ群：68106743
 
-![image](https://yzsam.com/upload/20190227114535.jpg)
-![image](https://yzsam.com/upload/20190227114452.jpg)
-![image](https://yzsam.com/upload/20190227114712.jpg)
+![image](https://yzsam.com/upload/1.jpg)
+![image](https://yzsam.com/upload/2.jpg)
+![image](https://yzsam.com/upload/3.jpg)
